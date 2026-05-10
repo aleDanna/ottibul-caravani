@@ -1,7 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
-import { and, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
-import { vehicles } from "@/db/schema";
+import { vehicles, heroImages } from "@/db/schema";
 import type { Locale } from "@/i18n/routing";
 import { HomeHero } from "@/components/public/HomeHero";
 import { HomeFeaturedFleet } from "@/components/public/HomeFeaturedFleet";
@@ -24,6 +24,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     limit: 6,
   });
 
+  const heroImagesData = await db.query.heroImages.findMany({
+    where: eq(heroImages.status, "published"),
+    orderBy: [asc(heroImages.sortOrder), desc(heroImages.createdAt)],
+    limit: 3,
+  });
+
   const featuredCards: VehicleCardData[] = featured.map((v) => ({
     id: v.id,
     slug: v.slug,
@@ -41,7 +47,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   return (
     <>
-      <HomeHero locale={locale as Locale} />
+      <HomeHero
+        locale={locale as Locale}
+        images={heroImagesData.map((img) => ({ url: img.url, altText: img.altText }))}
+      />
       <HomeFeaturedFleet locale={locale as Locale} vehicles={featuredCards} />
       <HomeWhyUs />
       <HomeHowItWorks locale={locale as Locale} />

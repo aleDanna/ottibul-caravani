@@ -1,13 +1,36 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { Container } from "./Container";
 
 type Stat = { value: string; label: string };
 
-export function HomeHero({ locale }: { locale: Locale }) {
+export type HomeHeroImage = { url: string; altText: string | null };
+
+const stackPositions: { inset: string; rotate: string }[] = [
+  { inset: "0 35% 30% 0", rotate: "rotate(-3deg)" },
+  { inset: "25% 0 5% 30%", rotate: "rotate(2deg)" },
+  { inset: "55% 50% 0 5%", rotate: "rotate(-1deg)" },
+];
+
+const gradientBackgrounds = [
+  "linear-gradient(135deg, var(--cielo-100), var(--sole-100), var(--crema-100))",
+  "linear-gradient(135deg, var(--bosco-100), var(--bosco-50), var(--crema-100))",
+  "linear-gradient(135deg, var(--terra-100), var(--sole-100), var(--crema-50))",
+];
+
+export function HomeHero({
+  locale,
+  images = [],
+}: {
+  locale: Locale;
+  images?: HomeHeroImage[];
+}) {
   const t = useTranslations("home");
   const stats = t.raw("stats") as Stat[];
+  const photos = images.slice(0, 3);
+  const hasPhotos = photos.length > 0;
 
   return (
     <section
@@ -85,36 +108,42 @@ export function HomeHero({ locale }: { locale: Locale }) {
           </div>
           <div className="relative hidden md:block">
             <div className="relative aspect-[4/5]">
-              <div
-                className="absolute overflow-hidden rounded-[var(--radius-xl)]"
-                style={{
-                  inset: "0 35% 30% 0",
-                  boxShadow: "var(--shadow-lg)",
-                  background:
-                    "linear-gradient(135deg, var(--cielo-100), var(--sole-100), var(--crema-100))",
-                  transform: "rotate(-3deg)",
-                }}
-              />
-              <div
-                className="absolute overflow-hidden rounded-[var(--radius-xl)]"
-                style={{
-                  inset: "25% 0 5% 30%",
-                  boxShadow: "var(--shadow-lg)",
-                  background:
-                    "linear-gradient(135deg, var(--bosco-100), var(--bosco-50), var(--crema-100))",
-                  transform: "rotate(2deg)",
-                }}
-              />
-              <div
-                className="absolute overflow-hidden rounded-[var(--radius-xl)]"
-                style={{
-                  inset: "55% 50% 0 5%",
-                  boxShadow: "var(--shadow-lg)",
-                  background:
-                    "linear-gradient(135deg, var(--terra-100), var(--sole-100), var(--crema-50))",
-                  transform: "rotate(-1deg)",
-                }}
-              />
+              {hasPhotos
+                ? photos.map((photo, i) => {
+                    const pos = stackPositions[i] ?? stackPositions[0];
+                    return (
+                      <div
+                        key={`${photo.url}-${i}`}
+                        className="absolute overflow-hidden rounded-[var(--radius-xl)]"
+                        style={{
+                          inset: pos.inset,
+                          boxShadow: "var(--shadow-lg)",
+                          transform: pos.rotate,
+                        }}
+                      >
+                        <Image
+                          src={photo.url}
+                          alt={photo.altText ?? ""}
+                          fill
+                          priority={i === 0}
+                          sizes="(min-width: 768px) 40vw, 0px"
+                          className="object-cover"
+                        />
+                      </div>
+                    );
+                  })
+                : stackPositions.map((pos, i) => (
+                    <div
+                      key={i}
+                      className="absolute overflow-hidden rounded-[var(--radius-xl)]"
+                      style={{
+                        inset: pos.inset,
+                        boxShadow: "var(--shadow-lg)",
+                        background: gradientBackgrounds[i],
+                        transform: pos.rotate,
+                      }}
+                    />
+                  ))}
             </div>
           </div>
         </div>

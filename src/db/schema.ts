@@ -137,3 +137,15 @@ export const faqsRelations = relations(faqs, ({ many }) => ({
 export const faqTranslationsRelations = relations(faqTranslations, ({ one }) => ({
   faq: one(faqs, { fields: [faqTranslations.faqId], references: [faqs.id] }),
 }));
+
+export const heroImageStatus = pgEnum("hero_image_status", ["draft", "published"]);
+
+export const heroImages = pgTable("hero_images", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  url: text("url").notNull(),
+  altText: text("alt_text"),
+  sortOrder: integer("sort_order").default(0).notNull(),
+  status: heroImageStatus("status").default("draft").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
