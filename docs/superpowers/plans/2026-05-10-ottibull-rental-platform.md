@@ -28,7 +28,7 @@ playwright.config.ts
 .prettierrc
 
 src/
-├── middleware.ts
+├── proxy.ts                              # Next 16 routing middleware (renamed from middleware.ts)
 ├── i18n/
 │   ├── routing.ts                         # next-intl routing
 │   └── request.ts                         # next-intl request config
@@ -485,7 +485,7 @@ git commit -m "feat(db): drizzle schema and initial migration"
 ### Task 4: i18n — next-intl routing + middleware
 
 **Files:**
-- Create: `src/i18n/routing.ts`, `src/i18n/request.ts`, `src/middleware.ts`
+- Create: `src/i18n/routing.ts`, `src/i18n/request.ts`, `src/proxy.ts`
 - Create: `src/messages/{es,ca,en}.json`
 - Modify: `next.config.ts`
 
@@ -611,7 +611,7 @@ Create `src/messages/ca.json` and `src/messages/en.json` with the same keys, tra
 
 - [ ] **Step 4: Middleware**
 
-Create `src/middleware.ts`:
+Create `src/proxy.ts`:
 ```ts
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
@@ -671,7 +671,7 @@ Expected: build succeeds (will fail later due to missing pages, that's fine for 
 - [ ] **Step 7: Commit**
 
 ```bash
-git add src/i18n src/messages src/middleware.ts next.config.ts
+git add src/i18n src/messages src/proxy.ts next.config.ts
 git commit -m "feat(i18n): next-intl with es/ca/en, middleware with admin guard"
 ```
 
