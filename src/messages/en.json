@@ -25,8 +25,8 @@
       { "value": "2", "label": "Premium vehicles" },
       { "value": "500+", "label": "Happy customers" }
     ],
-    "featuredEyebrow": "Our Fleet",
-    "featuredTitle": "Our Fleet",
+    "featuredEyebrow": "Featured vehicles",
+    "featuredTitle": "Our fleet",
     "featuredSubtitle": "Discover our fully equipped campers, ready for your next adventure",
     "featuredEmpty": "No featured vehicles yet.",
     "whyTitle": "What makes us different",

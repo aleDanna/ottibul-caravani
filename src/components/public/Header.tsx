@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Logo } from "./Logo";
+import { MobileMenu } from "./MobileMenu";
 
 export function Header({ locale }: { locale: Locale }) {
   const t = useTranslations("nav");
@@ -28,7 +29,7 @@ export function Header({ locale }: { locale: Locale }) {
           className="flex items-center"
           aria-label="Otti Bull"
         >
-          <Logo variant="color" className="h-[52px] w-auto md:h-[52px]" />
+          <Logo variant="color" className="h-[40px] w-auto md:h-[52px]" />
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((it) => (
@@ -43,9 +44,8 @@ export function Header({ locale }: { locale: Locale }) {
           ))}
           <LanguageSwitcher currentLocale={locale} />
         </nav>
-        {/* Mobile: just the language switcher; full mobile nav (hamburger) is a follow-up */}
         <div className="md:hidden">
-          <LanguageSwitcher currentLocale={locale} />
+          <MobileMenu items={navItems} currentLocale={locale} />
         </div>
       </div>
     </header>
