@@ -10,3 +10,4 @@ docs
 .idea
 .claude
 public
+drizzle/migrations

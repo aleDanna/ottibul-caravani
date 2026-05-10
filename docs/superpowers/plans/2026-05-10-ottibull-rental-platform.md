@@ -113,7 +113,7 @@ Confirm overwrite of existing `.gitignore` and accept defaults. If `pnpm create`
 ```bash
 pnpm add next@^16 react@^19 react-dom@^19
 pnpm add drizzle-orm pg next-auth@beta bcryptjs zod next-intl resend @react-email/components @react-email/render @vercel/blob libphonenumber-js react-markdown p-retry
-pnpm add -D drizzle-kit @types/pg vitest @vitest/ui @playwright/test eslint@^9 eslint-config-next prettier prettier-plugin-tailwindcss tsx react-email
+pnpm add -D drizzle-kit @types/pg vitest @vitest/ui @playwright/test eslint@^9 eslint-config-next prettier prettier-plugin-tailwindcss tsx react-email dotenv-cli
 ```
 
 We use `pg` (node-postgres) as the Postgres driver instead of `@neondatabase/serverless` so the **exact same code** runs against:
@@ -169,10 +169,10 @@ Edit `tsconfig.json`:
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio",
-    "db:seed:admin": "tsx scripts/seed-admin.ts"
+    "db:generate": "dotenv -e .env.local -- drizzle-kit generate",
+    "db:migrate": "dotenv -e .env.local -- drizzle-kit migrate",
+    "db:studio": "dotenv -e .env.local -- drizzle-kit studio",
+    "db:seed:admin": "dotenv -e .env.local -- tsx scripts/seed-admin.ts"
   }
 }
 ```
@@ -181,6 +181,7 @@ Notes:
 - `lint` is `eslint .` (not `next lint`) because Next 16 removed the `next lint` command.
 - `format:check` and `typecheck` are CI-friendly read-only equivalents of `format` and the build's type-check.
 - `test` includes `--passWithNoTests` so CI doesn't fail before any test files exist.
+- The `db:*` scripts are wrapped with `dotenv -e .env.local --` (from `dotenv-cli`, dev dep) because drizzle-kit and `tsx` do not auto-load `.env.local`. This way `pnpm db:migrate` Just Works from a clean shell. Production (Vercel/CI) sets env vars natively, so `dotenv -e` becomes a no-op there if `.env.local` doesn't exist.
 
 - [ ] **Step 5: Verify dev server boots**
 
@@ -349,7 +350,6 @@ if (!process.env.DATABASE_URL) {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
   var __pgPool: Pool | undefined;
 }
 
