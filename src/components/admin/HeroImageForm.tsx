@@ -58,7 +58,10 @@ export function HeroImageForm(props: { mode: "create" } | { mode: "edit"; initia
         style={{ borderColor: "var(--border-subtle)" }}
       >
         <legend className="px-2 font-semibold">Imagen</legend>
-        <ImageUploader initialUrl={data.url || undefined} onChange={(url) => update("url", url)} />
+        <ImageUploader
+          initialUrl={data.url || undefined}
+          onChange={(urls) => update("url", urls[urls.length - 1] ?? "")}
+        />
         <div>
           <label className="block text-sm font-medium">Alt text</label>
           <input

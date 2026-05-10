@@ -3,7 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 
-type Img = { url: string; altText: string | null; isCover: boolean };
+type Img = {
+  url: string;
+  altText: string | null;
+  isCover: boolean;
+  sortOrder: number;
+};
 
 export function VehicleGallery({
   images,
@@ -12,9 +17,11 @@ export function VehicleGallery({
   images: Img[];
   alt: string;
 }) {
-  const sorted = [...images].sort(
-    (a, b) => Number(b.isCover) - Number(a.isCover),
-  );
+  // Cover image first; remaining images in admin-defined sort order.
+  const sorted = [...images].sort((a, b) => {
+    if (a.isCover !== b.isCover) return a.isCover ? -1 : 1;
+    return a.sortOrder - b.sortOrder;
+  });
   const [active, setActive] = useState(0);
   if (sorted.length === 0) {
     return (

@@ -17,14 +17,19 @@ export function ImageGalleryManager({
   images: Img[];
   onChange: (imgs: Img[]) => void;
 }) {
-  function add(url: string) {
-    const next: Img = {
-      url,
-      altText: null,
-      sortOrder: images.length,
-      isCover: images.length === 0,
-    };
-    onChange([...images, next]);
+  function addMany(urls: string[]) {
+    if (urls.length === 0) return;
+    const next: Img[] = [...images];
+    for (const url of urls) {
+      if (next.length >= 10) break;
+      next.push({
+        url,
+        altText: null,
+        sortOrder: next.length,
+        isCover: next.length === 0,
+      });
+    }
+    onChange(next);
   }
   function remove(i: number) {
     const next = images
@@ -54,14 +59,7 @@ export function ImageGalleryManager({
           Máximo 10 imágenes alcanzado.
         </p>
       ) : (
-        // Reuse the ImageUploader from hero-images. It expects { initialUrl?, onChange(url) }
-        // We feed it a one-shot use: onChange triggers add() and the uploader resets via key remount.
-        <ImageUploader
-          key={images.length}
-          onChange={(url) => {
-            if (url) add(url);
-          }}
-        />
+        <ImageUploader multiple onChange={addMany} />
       )}
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {images.map((img, i) => (
