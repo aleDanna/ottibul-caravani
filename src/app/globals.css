@@ -1,26 +1,151 @@
 @import "tailwindcss";
 
+/* === Design tokens (from design/colors_and_type.css) === */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand */
+  --bosco-50: #f1f4eb;
+  --bosco-100: #e3ebdd;
+  --bosco-700: #355c44;
+  --bosco-800: #28503a;
+  --bosco-900: #1b3527;
+
+  /* Accent */
+  --sole-100: #fdf1d5;
+  --sole-400: #f6c76c;
+  --sole-500: #f2b441;
+
+  /* Secondary */
+  --cielo-100: #e3f0f4;
+  --cielo-700: #2c5f7a;
+  --terra-100: #f6e4d5;
+  --terra-300: #e8b89a;
+  --terra-700: #8b4a2d;
+
+  /* Neutrals */
+  --crema-50: #fbf8f1;
+  --crema-100: #f5efe3;
+  --bianco: #ffffff;
+  --inchiostro-100: #e8ece7;
+  --inchiostro-200: #d4dad5;
+  --inchiostro-500: #6b756f;
+  --inchiostro-700: #3a4540;
+  --inchiostro-900: #14201a;
+
+  /* Semantic */
+  --bg-page: var(--crema-50);
+  --bg-sunken: var(--crema-100);
+  --bg-elevated: var(--bianco);
+  --fg-1: var(--inchiostro-900);
+  --fg-2: var(--inchiostro-700);
+  --fg-3: var(--inchiostro-500);
+  --fg-on-dark: var(--crema-50);
+  --border-default: var(--inchiostro-200);
+  --border-subtle: var(--inchiostro-100);
+  --brand: var(--bosco-700);
+  --brand-hover: var(--bosco-800);
+  --brand-soft: var(--bosco-100);
+  --accent: var(--sole-500);
+  --link: var(--cielo-700);
+
+  /* Type tracking / line-heights */
+  --tracking-tight: -0.02em;
+  --tracking-snug: -0.01em;
+  --tracking-caps: 0.12em;
+  --lh-tight: 1.05;
+  --lh-snug: 1.2;
+  --lh-base: 1.5;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(20, 32, 26, 0.06);
+  --shadow-sm: 0 2px 6px rgba(20, 32, 26, 0.06), 0 1px 2px rgba(20, 32, 26, 0.04);
+  --shadow-md: 0 6px 16px rgba(20, 32, 26, 0.08), 0 2px 4px rgba(20, 32, 26, 0.04);
+  --shadow-lg: 0 16px 40px rgba(20, 32, 26, 0.1), 0 4px 12px rgba(20, 32, 26, 0.05);
+  --shadow-xl: 0 32px 80px rgba(20, 32, 26, 0.14), 0 8px 24px rgba(20, 32, 26, 0.06);
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --container-max: 1280px;
+  --container-pad: 32px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (max-width: 640px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --container-pad: 20px;
   }
 }
 
+@theme {
+  /* Tailwind theme bridge — re-expose tokens for utility classes */
+  --color-bosco-50: var(--bosco-50);
+  --color-bosco-100: var(--bosco-100);
+  --color-bosco-700: var(--bosco-700);
+  --color-bosco-800: var(--bosco-800);
+  --color-bosco-900: var(--bosco-900);
+  --color-sole-100: var(--sole-100);
+  --color-sole-400: var(--sole-400);
+  --color-sole-500: var(--sole-500);
+  --color-cielo-100: var(--cielo-100);
+  --color-cielo-700: var(--cielo-700);
+  --color-terra-100: var(--terra-100);
+  --color-terra-300: var(--terra-300);
+  --color-terra-700: var(--terra-700);
+  --color-crema-50: var(--crema-50);
+  --color-crema-100: var(--crema-100);
+  --color-bianco: var(--bianco);
+  --color-inchiostro-100: var(--inchiostro-100);
+  --color-inchiostro-200: var(--inchiostro-200);
+  --color-inchiostro-500: var(--inchiostro-500);
+  --color-inchiostro-700: var(--inchiostro-700);
+  --color-inchiostro-900: var(--inchiostro-900);
+
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --shadow-card: var(--shadow-md);
+  --radius-pill: 999px;
+}
+
+/* === Base styles === */
+html {
+  color-scheme: light;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-page);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-tight);
+}
+
+a {
+  color: inherit;
+}
+*:focus-visible {
+  outline: 3px solid var(--bosco-100);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
 }

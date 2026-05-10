@@ -6,7 +6,10 @@
   "nav": {
     "home": "Inicio",
     "catalog": "Catálogo",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "about": "Nosotros",
+    "usefulLinks": "Enlaces de Interés",
+    "faq": "FAQ"
   },
   "home": {
     "metaTitle": "Otti Bull · Alquiler de Autocaravanas en Barcelona",
@@ -58,6 +61,10 @@
   "footer": {
     "rights": "Todos los derechos reservados.",
     "privacy": "Política de privacidad",
-    "terms": "Términos y condiciones"
+    "terms": "Términos y condiciones",
+    "cookies": "Política de Cookies",
+    "groupRental": "Alquiler",
+    "groupHelp": "Ayuda",
+    "groupCompany": "Empresa"
   }
 }
