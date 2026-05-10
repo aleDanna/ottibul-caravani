@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { redirect } from "next/navigation";
 import { signIn } from "@/lib/auth";
 import { AuthError } from "next-auth";
 
@@ -24,11 +25,11 @@ export async function loginAction(_prev: LoginState, formData: FormData): Promis
     await signIn("credentials", {
       email: parsed.data.email,
       password: parsed.data.password,
-      redirectTo: parsed.data.next ?? "/admin",
+      redirect: false,
     });
   } catch (err) {
     if (err instanceof AuthError) return { error: "Credenciales incorrectas" };
     throw err;
   }
-  return {};
+  redirect(parsed.data.next ?? "/admin");
 }
