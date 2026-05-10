@@ -148,5 +148,58 @@
     "groupRental": "Rentals",
     "groupHelp": "Help",
     "groupCompany": "Company"
+  },
+  "about": {
+    "metaTitle": "About | Otti Bull",
+    "metaDescription": "Otti Bull SL — premium camper rental experts in Barcelona.",
+    "heroEyebrow": "Otti Bull SL",
+    "heroTitle": "Caravaning Experts from Barcelona",
+    "story": [
+      "At Otti Bull Caravaning, we are passionate about the freedom to travel and discover new horizons. From our base in Barcelona, we offer a premium camper rental service designed to make your adventure an unforgettable experience.",
+      "Our commitment is to provide you with vehicles in perfect condition, fully equipped and backed by the best customer service. Every camper in our fleet is carefully maintained and prepared to guarantee your safety and comfort on every kilometre.",
+      "Whether you are planning a weekend escape along the Catalan coast, a route through the Pyrenees, or a long European trip, at Otti Bull you will find the perfect vehicle and the support you need to live your adventure with complete peace of mind."
+    ],
+    "stats": [
+      { "value": "5+", "label": "Years of experience" },
+      { "value": "2", "label": "Premium vehicles" },
+      { "value": "500+", "label": "Happy customers" }
+    ],
+    "whyTitle": "Why choose us?",
+    "whyBullets": [
+      "New, well-maintained vehicles",
+      "Competitive prices with no surprises",
+      "Personalised attention",
+      "Flexible pickup and drop-off"
+    ]
+  },
+  "usefulLinks": {
+    "metaTitle": "Useful Links | Otti Bull",
+    "metaDescription": "Resources and reference websites to plan your camper adventure.",
+    "title": "Useful Links",
+    "subtitle": "Resources and reference websites to better plan your camper adventure",
+    "links": [
+      {
+        "name": "Tourism of Spain",
+        "url": "https://www.spain.info/",
+        "description": "A website offering detailed tourist information on different regions, cities and towns across Spain. It provides travel guides, recommendations for accommodation, food and activities, as well as news and articles on Spanish culture and history."
+      },
+      {
+        "name": "Park4Night",
+        "url": "https://park4night.com/",
+        "description": "Mobile app and web platform with detailed information on places to camp, park and spend the night in a campervan or motorhome in different countries around the world."
+      },
+      {
+        "name": "Campings Online",
+        "url": "https://www.campingsonline.com/",
+        "description": "Online platform offering information on campsites in several countries, including Spain, France, Portugal, Italy and Germany. You can search by location, services and activities, and book your stay online."
+      }
+    ]
+  },
+  "faq": {
+    "metaTitle": "Frequently Asked Questions | Otti Bull",
+    "metaDescription": "Answers to the most common questions about renting a camper with Otti Bull.",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to the most common questions about our rental service",
+    "empty": "No questions have been published yet."
   }
 }

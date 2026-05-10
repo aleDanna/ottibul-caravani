@@ -148,5 +148,58 @@
     "groupRental": "Lloguer",
     "groupHelp": "Ajuda",
     "groupCompany": "Empresa"
+  },
+  "about": {
+    "metaTitle": "Nosaltres | Otti Bull",
+    "metaDescription": "Otti Bull SL — experts en lloguer d'autocaravanes a Barcelona.",
+    "heroEyebrow": "Otti Bull SL",
+    "heroTitle": "Experts en Caravàning des de Barcelona",
+    "story": [
+      "A Otti Bull Caravaning som apassionats per la llibertat de viatjar i descobrir nous horitzons. Des de la nostra base a Barcelona, oferim un servei de lloguer d'autocaravanes premium dissenyat per convertir la teva aventura en una experiència inoblidable.",
+      "El nostre compromís és proporcionar-te vehicles en perfecte estat, totalment equipats i amb el millor servei d'atenció al client. Cada autocaravana de la nostra flota és curosament mantinguda i preparada per garantir la teva seguretat i comoditat a cada quilòmetre.",
+      "Tant si planeges una escapada de cap de setmana per la costa catalana, una ruta pels Pirineus o un viatge llarg per tota Europa, a Otti Bull trobaràs el vehicle perfecte i el suport que necessites per viure la teva aventura amb total tranquil·litat."
+    ],
+    "stats": [
+      { "value": "5+", "label": "Anys d'experiència" },
+      { "value": "2", "label": "Vehicles premium" },
+      { "value": "500+", "label": "Clients satisfets" }
+    ],
+    "whyTitle": "Per què escollir-nos?",
+    "whyBullets": [
+      "Vehicles nous i ben mantinguts",
+      "Preus competitius sense sorpreses",
+      "Atenció personalitzada",
+      "Flexibilitat en recollida i lliurament"
+    ]
+  },
+  "usefulLinks": {
+    "metaTitle": "Enllaços d'Interès | Otti Bull",
+    "metaDescription": "Recursos i webs de referència per planificar la teva aventura en autocaravana.",
+    "title": "Enllaços d'Interès",
+    "subtitle": "Recursos i webs de referència per planificar millor la teva aventura en autocaravana",
+    "links": [
+      {
+        "name": "Turisme d'Espanya",
+        "url": "https://www.spain.info/",
+        "description": "Pàgina web que ofereix informació turística detallada sobre diferents regions, ciutats i pobles d'Espanya. Proporciona guies de viatge, recomanacions d'allotjament, gastronomia i activitats, així com notícies i articles d'interès sobre la cultura i la història d'Espanya."
+      },
+      {
+        "name": "Park4Night",
+        "url": "https://park4night.com/",
+        "description": "Aplicació mòbil i plataforma web que proporciona informació detallada sobre llocs per acampar, estacionar i passar la nit en caravana o autocaravana en diferents països de tot el món."
+      },
+      {
+        "name": "Campings Online",
+        "url": "https://www.campingsonline.com/",
+        "description": "Plataforma en línia que ofereix informació sobre càmpings en diferents països, incloent-hi Espanya, França, Portugal, Itàlia i Alemanya. Permet cercar càmpings per ubicació, serveis i activitats, i reservar allotjament en línia."
+      }
+    ]
+  },
+  "faq": {
+    "metaTitle": "Preguntes Freqüents | Otti Bull",
+    "metaDescription": "Respostes als dubtes més comuns sobre el lloguer d'autocaravanes a Otti Bull.",
+    "title": "Preguntes Freqüents",
+    "subtitle": "Troba respostes als dubtes més comuns sobre el nostre servei de lloguer",
+    "empty": "Encara no hi ha preguntes publicades."
   }
 }
