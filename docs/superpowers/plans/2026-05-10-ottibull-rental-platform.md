@@ -112,13 +112,19 @@ Confirm overwrite of existing `.gitignore` and accept defaults. If `pnpm create`
 
 ```bash
 pnpm add next@^16 react@^19 react-dom@^19
-pnpm add drizzle-orm pg next-auth@beta bcryptjs zod next-intl resend react-email @react-email/components @vercel/blob @vercel/og libphonenumber-js react-markdown p-retry
-pnpm add -D drizzle-kit @types/pg @types/bcryptjs vitest @vitest/ui @playwright/test eslint eslint-config-next prettier prettier-plugin-tailwindcss tsx
+pnpm add drizzle-orm pg next-auth@beta bcryptjs zod next-intl resend @react-email/components @react-email/render @vercel/blob libphonenumber-js react-markdown p-retry
+pnpm add -D drizzle-kit @types/pg vitest @vitest/ui @playwright/test eslint@^9 eslint-config-next prettier prettier-plugin-tailwindcss tsx react-email
 ```
 
 We use `pg` (node-postgres) as the Postgres driver instead of `@neondatabase/serverless` so the **exact same code** runs against:
 - a local Docker Postgres in dev (Task 2.5),
 - Neon via its standard pooler endpoint in production (Vercel Fluid Compute is Node.js, supports TCP).
+
+Notes:
+- `react-email` is the CLI (used only for local template preview), so it's a dev dep.
+- `@vercel/og` is **not** needed: Next 16 ships `next/og` natively (we'll `import { ImageResponse } from 'next/og'`).
+- `@types/bcryptjs` is **not** needed: `bcryptjs@^3` bundles its own types.
+- `eslint` is pinned to `^9` because `eslint-config-next@16` peer-caps at 9; ESLint 10 is incompatible.
 
 - [ ] **Step 3: Configure TypeScript paths and strictness**
 
@@ -156,9 +162,11 @@ Edit `tsconfig.json`:
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
@@ -168,6 +176,11 @@ Edit `tsconfig.json`:
   }
 }
 ```
+
+Notes:
+- `lint` is `eslint .` (not `next lint`) because Next 16 removed the `next lint` command.
+- `format:check` and `typecheck` are CI-friendly read-only equivalents of `format` and the build's type-check.
+- `test` includes `--passWithNoTests` so CI doesn't fail before any test files exist.
 
 - [ ] **Step 5: Verify dev server boots**
 
