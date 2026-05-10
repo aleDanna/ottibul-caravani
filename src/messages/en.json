@@ -14,9 +14,91 @@
   "home": {
     "metaTitle": "Otti Bull · Camper Rentals in Barcelona",
     "metaDescription": "Rent premium campers and motorcycles in Barcelona. Easy booking, personalized service.",
+    "heroEyebrow": "Freedom on Wheels",
     "heroTitle": "Your next adventure starts here",
-    "heroSubtitle": "Campers and motorcycles to rent in Barcelona",
-    "ctaCatalog": "View catalog"
+    "heroSubtitle": "Premium camper rentals in Barcelona",
+    "heroPrimaryCta": "Browse vehicles",
+    "heroSecondaryCta": "How it works",
+    "ctaCatalog": "View catalog",
+    "stats": [
+      { "value": "5+", "label": "Years of experience" },
+      { "value": "2", "label": "Premium vehicles" },
+      { "value": "500+", "label": "Happy customers" }
+    ],
+    "featuredEyebrow": "Our Fleet",
+    "featuredTitle": "Our Fleet",
+    "featuredSubtitle": "Discover our fully equipped campers, ready for your next adventure",
+    "featuredEmpty": "No featured vehicles yet.",
+    "whyTitle": "What makes us different",
+    "whySubtitle": "Why hundreds of travellers trust Otti Bull for their adventures",
+    "why": [
+      {
+        "tone": "bosco",
+        "icon": "shield",
+        "title": "Comprehensive Insurance",
+        "body": "Travel with total peace of mind. All our vehicles include comprehensive insurance with full coverage and roadside assistance."
+      },
+      {
+        "tone": "sole",
+        "icon": "headset",
+        "title": "24/7 Support",
+        "body": "We are available 24 hours a day, 7 days a week. Technical support and immediate assistance wherever you are."
+      },
+      {
+        "tone": "cielo",
+        "icon": "package",
+        "title": "Fully Equipped",
+        "body": "Our campers come fully equipped: bedding, kitchenware, cleaning kit and everything you need for your trip."
+      },
+      {
+        "tone": "terra",
+        "icon": "calendar",
+        "title": "Flexible Pickup",
+        "body": "Pickup and drop-off times tailored to your needs. Door-to-door delivery available in the Barcelona area."
+      }
+    ],
+    "howItWorksEyebrow": "How it works",
+    "howItWorksTitle": "Three steps and you are on the road",
+    "howItWorksSubtitle": "No hidden steps, no surprises. Booking your camper is simple and fast.",
+    "howItWorksCta": "Book now",
+    "howItWorksSteps": [
+      {
+        "number": "01",
+        "title": "Choose your vehicle",
+        "body": "Browse our fleet and find the one that best fits your plans."
+      },
+      {
+        "number": "02",
+        "title": "Send your request",
+        "body": "Fill in the form with your dates and details. We reply by email and WhatsApp."
+      },
+      {
+        "number": "03",
+        "title": "Hit the road!",
+        "body": "Pick up the vehicle, we walk you through everything you need, and your adventure begins."
+      }
+    ],
+    "testimonialsEyebrow": "What people say",
+    "testimonialsTitle": "Real adventures, happy travellers",
+    "testimonialsSubtitle": "Our customers' trust is our best endorsement",
+    "testimonials": [
+      {
+        "initials": "MG",
+        "name": "María González",
+        "city": "Madrid",
+        "quote": "An incredible experience. The camper was spotless and the service was exceptional. We drove the whole Costa Brava and it was an unforgettable trip. Highly recommended!"
+      },
+      {
+        "initials": "AT",
+        "name": "Ana Torres",
+        "city": "Barcelona",
+        "quote": "The best decision for our holidays. Total flexibility on schedules, a vehicle in perfect condition and a warm, professional service. We are already planning our next trip with them."
+      }
+    ],
+    "finalCtaEyebrow": "Ready?",
+    "finalCtaTitle": "Ready for your adventure?",
+    "finalCtaSubtitle": "Get in touch and book your favourite camper",
+    "finalCtaButton": "Browse fleet"
   },
   "catalog": {
     "metaTitle": "Vehicle Catalog | Otti Bull",

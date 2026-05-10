@@ -14,9 +14,91 @@
   "home": {
     "metaTitle": "Otti Bull · Lloguer d'Autocaravanes a Barcelona",
     "metaDescription": "Lloga autocaravanes i motos premium a Barcelona. Reserva fàcil, atenció personalitzada.",
+    "heroEyebrow": "Llibertat sobre Rodes",
     "heroTitle": "La teva propera aventura comença aquí",
-    "heroSubtitle": "Autocaravanes i motos per llogar a Barcelona",
-    "ctaCatalog": "Veure catàleg"
+    "heroSubtitle": "Lloguer d'autocaravanes premium a Barcelona",
+    "heroPrimaryCta": "Cercar vehicles",
+    "heroSecondaryCta": "Com funciona",
+    "ctaCatalog": "Veure catàleg",
+    "stats": [
+      { "value": "5+", "label": "Anys d'experiència" },
+      { "value": "2", "label": "Vehicles premium" },
+      { "value": "500+", "label": "Clients satisfets" }
+    ],
+    "featuredEyebrow": "La Nostra Flota",
+    "featuredTitle": "La Nostra Flota",
+    "featuredSubtitle": "Descobreix les nostres autocaravanes totalment equipades i a punt per a la teva propera aventura",
+    "featuredEmpty": "Encara no hi ha vehicles destacats.",
+    "whyTitle": "El que ens fa diferents",
+    "whySubtitle": "Per què centenars de viatgers confien en Otti Bull per a les seves aventures",
+    "why": [
+      {
+        "tone": "bosco",
+        "icon": "shield",
+        "title": "Assegurança a Tot Risc",
+        "body": "Viatja amb total tranquil·litat. Tots els nostres vehicles inclouen assegurança a tot risc amb cobertura completa i assistència a la carretera."
+      },
+      {
+        "tone": "sole",
+        "icon": "headset",
+        "title": "Assistència 24/7",
+        "body": "Estem disponibles les 24 hores del dia, els 7 dies de la setmana. Suport tècnic i assistència immediata on siguis."
+      },
+      {
+        "tone": "cielo",
+        "icon": "package",
+        "title": "Equipament Complet",
+        "body": "Les nostres autocaravanes estan totalment equipades: roba de llit, parament de cuina, kit de neteja i tot el necessari per al teu viatge."
+      },
+      {
+        "tone": "terra",
+        "icon": "calendar",
+        "title": "Lliurament Flexible",
+        "body": "Horaris de recollida i lliurament adaptats a les teves necessitats. Servei de lliurament a domicili disponible a l'àrea de Barcelona."
+      }
+    ],
+    "howItWorksEyebrow": "Com funciona",
+    "howItWorksTitle": "Tres passos i ja estàs en marxa",
+    "howItWorksSubtitle": "Sense passos ocults, sense sorpreses. Reservar la teva autocaravana és simple i ràpid.",
+    "howItWorksCta": "Reserva ara",
+    "howItWorksSteps": [
+      {
+        "number": "01",
+        "title": "Tria el teu vehicle",
+        "body": "Explora la nostra flota i troba el que millor s'adapta al teu pla."
+      },
+      {
+        "number": "02",
+        "title": "Envia la teva sol·licitud",
+        "body": "Omple el formulari amb les teves dates i dades. Et responem per email i WhatsApp."
+      },
+      {
+        "number": "03",
+        "title": "A la carretera!",
+        "body": "Reculls el vehicle, t'expliquem tot el necessari i comença la teva aventura."
+      }
+    ],
+    "testimonialsEyebrow": "El que diuen de nosaltres",
+    "testimonialsTitle": "Aventures reals, viatgers feliços",
+    "testimonialsSubtitle": "La confiança dels nostres clients és el nostre millor aval",
+    "testimonials": [
+      {
+        "initials": "MG",
+        "name": "María González",
+        "city": "Madrid",
+        "quote": "Una experiència increïble. L'autocaravana estava impecable i el servei va ser excepcional. Vam recórrer tota la Costa Brava i va ser un viatge inoblidable. Totalment recomanable!"
+      },
+      {
+        "initials": "AT",
+        "name": "Ana Torres",
+        "city": "Barcelona",
+        "quote": "La millor decisió per a les nostres vacances. Flexibilitat total en horaris, vehicle en perfecte estat i un tracte proper i professional. Ja estem planificant el nostre proper viatge amb ells."
+      }
+    ],
+    "finalCtaEyebrow": "Preparat?",
+    "finalCtaTitle": "Preparat per a la teva aventura?",
+    "finalCtaSubtitle": "Contacta'ns i reserva la teva autocaravana preferida",
+    "finalCtaButton": "Veure flota"
   },
   "catalog": {
     "metaTitle": "Catàleg de Vehicles | Otti Bull",
