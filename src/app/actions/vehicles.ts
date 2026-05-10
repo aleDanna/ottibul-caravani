@@ -25,7 +25,10 @@ export async function createVehicleAction(input: VehicleFormInput) {
   await requireAdminSession();
   const parsed = vehicleFormSchema.safeParse(input);
   if (!parsed.success) {
-    return { error: "Validation failed", issues: parsed.error.issues };
+    const details = parsed.error.issues
+      .map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`)
+      .join("; ");
+    return { error: details || "Validation failed" };
   }
   const errors = validateForPublish(parsed.data);
   if (errors.length) return { error: errors.join("; ") };
@@ -77,7 +80,10 @@ export async function updateVehicleAction(id: string, input: VehicleFormInput) {
   await requireAdminSession();
   const parsed = vehicleFormSchema.safeParse(input);
   if (!parsed.success) {
-    return { error: "Validation failed", issues: parsed.error.issues };
+    const details = parsed.error.issues
+      .map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`)
+      .join("; ");
+    return { error: details || "Validation failed" };
   }
   const errors = validateForPublish(parsed.data);
   if (errors.length) return { error: errors.join("; ") };
