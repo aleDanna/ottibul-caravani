@@ -797,13 +797,14 @@ Create `src/components/admin/LoginForm.tsx`:
 ```tsx
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { loginAction, type LoginState } from '@/app/actions/auth';
 
 const initial: LoginState = {};
 
 export function LoginForm({ next }: { next?: string }) {
-  const [state, action] = useFormState(loginAction, initial);
+  const [state, action] = useActionState(loginAction, initial);
   return (
     <form action={action} className="space-y-4">
       <input type="hidden" name="next" value={next ?? '/admin'} />
@@ -2126,7 +2127,8 @@ Create `src/components/public/InquiryForm.tsx`:
 ```tsx
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/routing';
 import { submitInquiryAction, type InquiryState } from '@/app/actions/inquiries';
@@ -2134,7 +2136,7 @@ import { submitInquiryAction, type InquiryState } from '@/app/actions/inquiries'
 const initial: InquiryState = {};
 
 export function InquiryForm({ vehicleId, locale }: { vehicleId: string; locale: Locale }) {
-  const [state, action] = useFormState(submitInquiryAction, initial);
+  const [state, action] = useActionState(submitInquiryAction, initial);
   const t = useTranslations('form');
   return (
     <form action={action} className="space-y-3">
