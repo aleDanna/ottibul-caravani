@@ -2,6 +2,7 @@ type UsefulLinkCardProps = {
   name: string;
   url: string;
   description: string;
+  logo?: string;
 };
 
 function ExternalLinkIcon() {
@@ -32,11 +33,18 @@ function getDomain(url: string): string {
   }
 }
 
-export function UsefulLinkCard({ name, url, description }: UsefulLinkCardProps) {
+export function UsefulLinkCard({
+  name,
+  url,
+  description,
+  logo,
+}: UsefulLinkCardProps) {
   const domain = getDomain(url);
-  const logoUrl = domain
-    ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
-    : null;
+  // Prefer an explicit logo path (e.g. /logos/campingsonline.png) over the
+  // auto-fetched favicon, which can fall back to a generic globe.
+  const logoUrl =
+    logo ??
+    (domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null);
 
   return (
     <a

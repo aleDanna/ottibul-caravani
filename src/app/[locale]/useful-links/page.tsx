@@ -4,7 +4,12 @@ import { UsefulLinkCard } from "@/components/public/UsefulLinkCard";
 
 export const dynamic = "force-static";
 
-type LinkEntry = { name: string; url: string; description: string };
+type LinkEntry = {
+  name: string;
+  url: string;
+  description: string;
+  logo?: string;
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -55,6 +60,7 @@ export default async function UsefulLinksPage({ params }: { params: Promise<{ lo
               name={link.name}
               url={link.url}
               description={link.description}
+              logo={link.logo}
             />
           ))}
         </div>
