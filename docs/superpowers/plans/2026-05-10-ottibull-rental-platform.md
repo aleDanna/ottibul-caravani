@@ -15,6 +15,7 @@
 ```
 .env.example                              # template (committed)
 .env.local                                 # local dev (gitignored)
+docker-compose.yml                        # local postgres
 package.json
 tsconfig.json
 next.config.ts
@@ -111,9 +112,13 @@ Confirm overwrite of existing `.gitignore` and accept defaults. If `pnpm create`
 
 ```bash
 pnpm add next@^16 react@^19 react-dom@^19
-pnpm add drizzle-orm @neondatabase/serverless next-auth@beta bcryptjs zod next-intl resend react-email @react-email/components @vercel/blob @vercel/og libphonenumber-js react-markdown p-retry
-pnpm add -D drizzle-kit @types/bcryptjs vitest @vitest/ui @playwright/test eslint eslint-config-next prettier prettier-plugin-tailwindcss tsx
+pnpm add drizzle-orm pg next-auth@beta bcryptjs zod next-intl resend react-email @react-email/components @vercel/blob @vercel/og libphonenumber-js react-markdown p-retry
+pnpm add -D drizzle-kit @types/pg @types/bcryptjs vitest @vitest/ui @playwright/test eslint eslint-config-next prettier prettier-plugin-tailwindcss tsx
 ```
+
+We use `pg` (node-postgres) as the Postgres driver instead of `@neondatabase/serverless` so the **exact same code** runs against:
+- a local Docker Postgres in dev (Task 2.5),
+- Neon via its standard pooler endpoint in production (Vercel Fluid Compute is Node.js, supports TCP).
 
 - [ ] **Step 3: Configure TypeScript paths and strictness**
 
@@ -187,8 +192,12 @@ git commit -m "chore: bootstrap Next.js 16 project with TypeScript, Tailwind, de
 - [ ] **Step 1: Create `.env.example`**
 
 ```bash
-# Database (Neon - auto-provisioned via Vercel Marketplace)
-DATABASE_URL="postgresql://user:pass@host/db?sslmode=require"
+# Database
+# Local dev (Docker, see Task 2.5):
+#   postgresql://ottibull:ottibull@localhost:5432/ottibull
+# Production (Neon via Vercel Marketplace, auto-provisioned):
+#   postgresql://user:pass@host/db?sslmode=require
+DATABASE_URL="postgresql://ottibull:ottibull@localhost:5432/ottibull"
 
 # Auth
 AUTH_SECRET=""              # openssl rand -base64 32
@@ -211,13 +220,84 @@ NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 
 - [ ] **Step 2: Create local `.env.local` (gitignored) with dev values**
 
-User fills `AUTH_SECRET` (`openssl rand -base64 32`) and any other values they have. Commit only the example.
+User fills `AUTH_SECRET` (`openssl rand -base64 32`) and any other values they have. The `DATABASE_URL` from `.env.example` already points at the local Docker DB (Task 2.5). Commit only the example.
 
 - [ ] **Step 3: Commit**
 
 ```bash
 git add .env.example
 git commit -m "chore: add env vars template"
+```
+
+---
+
+### Task 2.5: Local Postgres via Docker
+
+**Files:**
+- Create: `docker-compose.yml`
+- Modify: `package.json` (add db:up/db:down scripts)
+- Modify: `README.md` (or create) with quick-start
+
+- [ ] **Step 1: docker-compose.yml**
+
+Create `docker-compose.yml`:
+```yaml
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ottibull-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ottibull
+      POSTGRES_PASSWORD: ottibull
+      POSTGRES_DB: ottibull
+    ports:
+      - "5432:5432"
+    volumes:
+      - ottibull-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ottibull -d ottibull"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  ottibull-pgdata:
+```
+
+Why postgres:16: matches Neon's default major version, so behavior parity between dev and prod. Volume named `ottibull-pgdata` survives container restarts.
+
+- [ ] **Step 2: Add scripts**
+
+Add to `package.json` `scripts`:
+```json
+"db:up": "docker compose up -d postgres",
+"db:down": "docker compose down",
+"db:logs": "docker compose logs -f postgres",
+"db:reset": "docker compose down -v && docker compose up -d postgres"
+```
+
+- [ ] **Step 3: Boot the DB**
+
+```bash
+pnpm db:up
+docker compose ps        # expect 'postgres' service Up (healthy)
+```
+
+If port 5432 is in use locally (another Postgres running), change the host port mapping in `docker-compose.yml` to e.g. `5433:5432` and update `DATABASE_URL` accordingly.
+
+- [ ] **Step 4: Smoke test connection**
+
+```bash
+docker compose exec postgres psql -U ottibull -d ottibull -c "SELECT version();"
+```
+Expected: prints PostgreSQL 16.x output.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add docker-compose.yml package.json
+git commit -m "chore(db): docker-compose for local postgres"
 ```
 
 ---
@@ -247,17 +327,33 @@ export default defineConfig({
 
 Create `src/db/client.ts`:
 ```ts
-import { drizzle } from 'drizzle-orm/neon-http';
-import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
 import * as schema from './schema';
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL is not set');
 }
 
-const sql = neon(process.env.DATABASE_URL);
-export const db = drizzle(sql, { schema });
+declare global {
+  // eslint-disable-next-line no-var
+  var __pgPool: Pool | undefined;
+}
+
+const pool =
+  globalThis.__pgPool ??
+  new Pool({
+    connectionString: process.env.DATABASE_URL,
+    max: 10,
+    idleTimeoutMillis: 30_000,
+  });
+
+if (process.env.NODE_ENV !== 'production') globalThis.__pgPool = pool;
+
+export const db = drizzle(pool, { schema });
 ```
+
+The `globalThis.__pgPool` cache keeps the pool alive across HMR reloads in dev (avoids "too many clients" after a few file edits). In production on Vercel Fluid Compute, a fresh pool is created per cold start and reused across concurrent requests on the same instance — exactly what we want.
 
 - [ ] **Step 3: Schema definition**
 
