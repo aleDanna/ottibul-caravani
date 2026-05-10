@@ -25,10 +25,10 @@
       { "value": "2", "label": "Vehículos premium" },
       { "value": "500+", "label": "Clientes satisfechos" }
     ],
-    "featuredEyebrow": "Vehículos destacados",
+    "featuredEyebrow": "Catálogo",
     "featuredTitle": "Nuestra flota",
-    "featuredSubtitle": "Descubre nuestras autocaravanas totalmente equipadas y listas para tu próxima aventura",
-    "featuredEmpty": "Aún no hay vehículos destacados.",
+    "featuredSubtitle": "Descubre todos nuestros vehículos totalmente equipados y listos para tu próxima aventura",
+    "featuredEmpty": "Aún no hay vehículos disponibles.",
     "whyTitle": "Lo que nos hace diferentes",
     "whySubtitle": "Por qué cientos de viajeros confían en Otti Bull para sus aventuras",
     "why": [

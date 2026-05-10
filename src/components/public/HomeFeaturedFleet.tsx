@@ -33,10 +33,22 @@ export function HomeFeaturedFleet({
             <p className="text-base">{t("featuredEmpty")}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {vehicles.map((v) => (
-              <VehicleCard key={v.id} locale={locale} vehicle={v} />
-            ))}
+          <div className="-mx-5 md:-mx-8">
+            <div
+              className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-4 md:px-8"
+              style={{ scrollPaddingLeft: "var(--container-pad, 32px)" }}
+            >
+              {vehicles.map((v) => (
+                <div
+                  key={v.id}
+                  className="w-[280px] shrink-0 snap-start sm:w-[320px] md:w-[360px]"
+                >
+                  <VehicleCard locale={locale} vehicle={v} />
+                </div>
+              ))}
+              {/* Trailing spacer so the last card can fully snap into view */}
+              <div className="w-1 shrink-0" aria-hidden="true" />
+            </div>
           </div>
         )}
       </Container>

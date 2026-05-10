@@ -25,10 +25,10 @@
       { "value": "2", "label": "Premium vehicles" },
       { "value": "500+", "label": "Happy customers" }
     ],
-    "featuredEyebrow": "Featured vehicles",
+    "featuredEyebrow": "Catalog",
     "featuredTitle": "Our fleet",
-    "featuredSubtitle": "Discover our fully equipped campers, ready for your next adventure",
-    "featuredEmpty": "No featured vehicles yet.",
+    "featuredSubtitle": "Discover all our fully equipped vehicles, ready for your next adventure",
+    "featuredEmpty": "No vehicles available yet.",
     "whyTitle": "What makes us different",
     "whySubtitle": "Why hundreds of travellers trust Otti Bull for their adventures",
     "why": [

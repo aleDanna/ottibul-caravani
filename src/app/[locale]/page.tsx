@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { and, asc, desc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { vehicles, heroImages } from "@/db/schema";
 import type { Locale } from "@/i18n/routing";
@@ -28,11 +28,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const featured = await db.query.vehicles.findMany({
-    where: and(eq(vehicles.status, "published"), eq(vehicles.featured, true)),
+  const fleet = await db.query.vehicles.findMany({
+    where: eq(vehicles.status, "published"),
     with: { translations: true, images: true },
     orderBy: [desc(vehicles.sortOrder), desc(vehicles.createdAt)],
-    limit: 6,
   });
 
   const heroImagesData = await db.query.heroImages.findMany({
@@ -41,7 +40,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     limit: 3,
   });
 
-  const featuredCards: VehicleCardData[] = featured.map((v) => ({
+  const fleetCards: VehicleCardData[] = fleet.map((v) => ({
     id: v.id,
     slug: v.slug,
     type: v.type,
@@ -62,7 +61,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         locale={locale as Locale}
         images={heroImagesData.map((img) => ({ url: img.url, altText: img.altText }))}
       />
-      <HomeFeaturedFleet locale={locale as Locale} vehicles={featuredCards} />
+      <HomeFeaturedFleet locale={locale as Locale} vehicles={fleetCards} />
       <HomeWhyUs />
       <HomeHowItWorks locale={locale as Locale} />
       <HomeTestimonials />

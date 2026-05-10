@@ -25,10 +25,10 @@
       { "value": "2", "label": "Vehicles premium" },
       { "value": "500+", "label": "Clients satisfets" }
     ],
-    "featuredEyebrow": "Vehicles destacats",
+    "featuredEyebrow": "Catàleg",
     "featuredTitle": "La nostra flota",
-    "featuredSubtitle": "Descobreix les nostres autocaravanes totalment equipades i a punt per a la teva propera aventura",
-    "featuredEmpty": "Encara no hi ha vehicles destacats.",
+    "featuredSubtitle": "Descobreix tots els nostres vehicles totalment equipats i a punt per a la teva propera aventura",
+    "featuredEmpty": "Encara no hi ha vehicles disponibles.",
     "whyTitle": "El que ens fa diferents",
     "whySubtitle": "Per què centenars de viatgers confien en Otti Bull per a les seves aventures",
     "why": [

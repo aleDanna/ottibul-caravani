@@ -147,13 +147,6 @@ export function VehicleForm(props: Props) {
             <option value="published">Publicado</option>
           </select>
         </Row>
-        <Row label="Destacado">
-          <input
-            type="checkbox"
-            checked={data.featured}
-            onChange={(e) => update("featured", e.target.checked)}
-          />
-        </Row>
         <Row label="Orden">
           <input
             type="number"
