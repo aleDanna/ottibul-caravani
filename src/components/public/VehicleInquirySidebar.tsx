@@ -1,8 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
+import { InquiryForm } from "./InquiryForm";
 
 export async function VehicleInquirySidebar({
   locale,
+  vehicleId,
   basePricePerDay,
 }: {
   locale: Locale;
@@ -18,12 +20,13 @@ export async function VehicleInquirySidebar({
         background: "var(--bg-elevated)",
       }}
     >
-      <p className="text-sm" style={{ color: "var(--fg-3)" }}>
+      <p className="text-base font-semibold" style={{ color: "var(--fg-1)" }}>
         {t("fromPrice", { price: basePricePerDay })}
       </p>
-      <p className="mt-3 text-sm" style={{ color: "var(--fg-3)" }}>
-        Formulario de solicitud — próximamente.
+      <p className="mt-1 mb-4 text-xs" style={{ color: "var(--fg-3)" }}>
+        {t("requestQuote")}
       </p>
+      <InquiryForm vehicleId={vehicleId} locale={locale} />
     </div>
   );
 }
