@@ -24,7 +24,20 @@ function ExternalLinkIcon() {
   );
 }
 
+function getDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
 export function UsefulLinkCard({ name, url, description }: UsefulLinkCardProps) {
+  const domain = getDomain(url);
+  const logoUrl = domain
+    ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+    : null;
+
   return (
     <a
       href={url}
@@ -34,9 +47,27 @@ export function UsefulLinkCard({ name, url, description }: UsefulLinkCardProps) 
       style={{ borderColor: "var(--border-subtle)" }}
     >
       <div className="flex items-start justify-between gap-3">
-        <h3 className="text-lg font-semibold" style={{ color: "var(--fg-1)" }}>
-          {name}
-        </h3>
+        <div className="flex items-center gap-3">
+          {logoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logoUrl}
+              alt=""
+              width={40}
+              height={40}
+              loading="lazy"
+              className="h-10 w-10 rounded-[var(--radius-sm)] flex-shrink-0"
+              style={{
+                background: "var(--bg-sunken)",
+                objectFit: "contain",
+                padding: "4px",
+              }}
+            />
+          )}
+          <h3 className="text-lg font-semibold" style={{ color: "var(--fg-1)" }}>
+            {name}
+          </h3>
+        </div>
         <span style={{ color: "var(--fg-3)" }} aria-hidden="true">
           <ExternalLinkIcon />
         </span>
