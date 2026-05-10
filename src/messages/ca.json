@@ -1,0 +1,63 @@
+{
+  "common": {
+    "brand": "Otti Bull",
+    "tagline": "Lloguer d'Autocaravanes Premium a Barcelona"
+  },
+  "nav": {
+    "home": "Inici",
+    "catalog": "Catàleg",
+    "contact": "Contacte"
+  },
+  "home": {
+    "metaTitle": "Otti Bull · Lloguer d'Autocaravanes a Barcelona",
+    "metaDescription": "Lloga autocaravanes i motos premium a Barcelona. Reserva fàcil, atenció personalitzada.",
+    "heroTitle": "La teva propera aventura comença aquí",
+    "heroSubtitle": "Autocaravanes i motos per llogar a Barcelona",
+    "ctaCatalog": "Veure catàleg"
+  },
+  "catalog": {
+    "metaTitle": "Catàleg de Vehicles | Otti Bull",
+    "metaDescription": "Explora la nostra flota d'autocaravanes, motos i més en lloguer a Barcelona.",
+    "title": "La nostra flota",
+    "filterAll": "Tots",
+    "filterCamper": "Autocaravanes",
+    "filterMotorcycle": "Motos",
+    "filterCar": "Cotxes",
+    "filterBicycle": "Bicicletes",
+    "filterBoat": "Vaixells",
+    "fromPrice": "des de {price} €/dia",
+    "empty": "No hi ha vehicles que coincideixin amb els filtres."
+  },
+  "vehicle": {
+    "fromPrice": "des de {price} €/dia",
+    "minDays": "Mínim {days} dies",
+    "location": "Ubicació",
+    "requestQuote": "Sol·licitar pressupost"
+  },
+  "form": {
+    "name": "Nom complet",
+    "email": "Email",
+    "phone": "Telèfon",
+    "checkIn": "Data d'entrada",
+    "checkOut": "Data de sortida",
+    "guests": "Nombre de persones",
+    "message": "Missatge (opcional)",
+    "consent": "Accepto la política de privacitat",
+    "submit": "Enviar sol·licitud",
+    "errorRequired": "Camp obligatori",
+    "errorEmail": "Email no vàlid",
+    "errorPhone": "Telèfon no vàlid",
+    "errorDates": "La data de sortida ha de ser posterior a la d'entrada"
+  },
+  "thankYou": {
+    "title": "Sol·licitud enviada!",
+    "body": "Hem rebut la teva sol·licitud per email. Per accelerar la resposta, també pots contactar-nos directament per WhatsApp:",
+    "whatsapp": "Continuar al WhatsApp",
+    "back": "Tornar al catàleg"
+  },
+  "footer": {
+    "rights": "Tots els drets reservats.",
+    "privacy": "Política de privacitat",
+    "terms": "Termes i condicions"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "common": {
+    "brand": "Otti Bull",
+    "tagline": "Premium Camper Rentals in Barcelona"
+  },
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "contact": "Contact"
+  },
+  "home": {
+    "metaTitle": "Otti Bull · Camper Rentals in Barcelona",
+    "metaDescription": "Rent premium campers and motorcycles in Barcelona. Easy booking, personalized service.",
+    "heroTitle": "Your next adventure starts here",
+    "heroSubtitle": "Campers and motorcycles to rent in Barcelona",
+    "ctaCatalog": "View catalog"
+  },
+  "catalog": {
+    "metaTitle": "Vehicle Catalog | Otti Bull",
+    "metaDescription": "Explore our fleet of campers, motorcycles and more for rent in Barcelona.",
+    "title": "Our fleet",
+    "filterAll": "All",
+    "filterCamper": "Campers",
+    "filterMotorcycle": "Motorcycles",
+    "filterCar": "Cars",
+    "filterBicycle": "Bicycles",
+    "filterBoat": "Boats",
+    "fromPrice": "from {price} €/day",
+    "empty": "No vehicles match the selected filters."
+  },
+  "vehicle": {
+    "fromPrice": "from {price} €/day",
+    "minDays": "Minimum {days} days",
+    "location": "Location",
+    "requestQuote": "Request a quote"
+  },
+  "form": {
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "checkIn": "Check-in date",
+    "checkOut": "Check-out date",
+    "guests": "Number of guests",
+    "message": "Message (optional)",
+    "consent": "I accept the privacy policy",
+    "submit": "Send request",
+    "errorRequired": "Required field",
+    "errorEmail": "Invalid email",
+    "errorPhone": "Invalid phone number",
+    "errorDates": "The check-out date must be after the check-in date"
+  },
+  "thankYou": {
+    "title": "Request sent!",
+    "body": "We received your request by email. To speed up our response, you can also reach us directly on WhatsApp:",
+    "whatsapp": "Continue on WhatsApp",
+    "back": "Back to catalog"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "Privacy policy",
+    "terms": "Terms and conditions"
+  }
+}

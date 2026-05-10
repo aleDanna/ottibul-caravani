@@ -1,0 +1,63 @@
+{
+  "common": {
+    "brand": "Otti Bull",
+    "tagline": "Alquiler de Autocaravanas Premium en Barcelona"
+  },
+  "nav": {
+    "home": "Inicio",
+    "catalog": "Catálogo",
+    "contact": "Contacto"
+  },
+  "home": {
+    "metaTitle": "Otti Bull · Alquiler de Autocaravanas en Barcelona",
+    "metaDescription": "Alquila autocaravanas y motos premium en Barcelona. Reserva fácil, atención personalizada.",
+    "heroTitle": "Tu próxima aventura empieza aquí",
+    "heroSubtitle": "Autocaravanas y motos para alquilar en Barcelona",
+    "ctaCatalog": "Ver catálogo"
+  },
+  "catalog": {
+    "metaTitle": "Catálogo de Vehículos | Otti Bull",
+    "metaDescription": "Explora nuestra flota de autocaravanas, motos y más en alquiler en Barcelona.",
+    "title": "Nuestra flota",
+    "filterAll": "Todos",
+    "filterCamper": "Autocaravanas",
+    "filterMotorcycle": "Motos",
+    "filterCar": "Coches",
+    "filterBicycle": "Bicicletas",
+    "filterBoat": "Barcos",
+    "fromPrice": "desde {price} €/día",
+    "empty": "No hay vehículos que coincidan con los filtros."
+  },
+  "vehicle": {
+    "fromPrice": "desde {price} €/día",
+    "minDays": "Mínimo {days} días",
+    "location": "Ubicación",
+    "requestQuote": "Solicitar presupuesto"
+  },
+  "form": {
+    "name": "Nombre completo",
+    "email": "Email",
+    "phone": "Teléfono",
+    "checkIn": "Fecha de entrada",
+    "checkOut": "Fecha de salida",
+    "guests": "Número de personas",
+    "message": "Mensaje (opcional)",
+    "consent": "Acepto la política de privacidad",
+    "submit": "Enviar solicitud",
+    "errorRequired": "Campo obligatorio",
+    "errorEmail": "Email no válido",
+    "errorPhone": "Teléfono no válido",
+    "errorDates": "La fecha de salida debe ser posterior a la de entrada"
+  },
+  "thankYou": {
+    "title": "¡Solicitud enviada!",
+    "body": "Hemos recibido tu solicitud por email. Para acelerar la respuesta, también puedes contactarnos directamente por WhatsApp:",
+    "whatsapp": "Continuar en WhatsApp",
+    "back": "Volver al catálogo"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "privacy": "Política de privacidad",
+    "terms": "Términos y condiciones"
+  }
+}
