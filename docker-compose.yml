@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ottibull-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ottibull
+      POSTGRES_PASSWORD: ottibull
+      POSTGRES_DB: ottibull
+    ports:
+      - "5432:5432"
+    volumes:
+      - ottibull-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ottibull -d ottibull"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  ottibull-pgdata:
