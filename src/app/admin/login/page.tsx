@@ -5,7 +5,7 @@ import { LoginForm } from "@/components/admin/LoginForm";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Admin Login · Otti Bull",
+  title: "Acceso · Otti Bull",
   robots: { index: false, follow: false },
 };
 
@@ -20,7 +20,7 @@ export default async function LoginPage({
 
   return (
     <main className="mx-auto max-w-sm p-6">
-      <h1 className="mb-4 text-2xl">Admin Login</h1>
+      <h1 className="mb-4 text-2xl">Acceso al panel</h1>
       <LoginForm next={sp.next} />
     </main>
   );

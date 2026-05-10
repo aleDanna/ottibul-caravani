@@ -8,7 +8,7 @@ export default function NewHeroImagePage() {
     <div className="space-y-6">
       <div className="flex items-center gap-3 text-sm">
         <Link href="/admin/hero-images" className="underline">
-          ← Hero Images
+          ← Imágenes hero
         </Link>
       </div>
       <h1 className="text-3xl">Nueva imagen</h1>

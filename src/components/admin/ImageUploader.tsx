@@ -56,27 +56,59 @@ export function ImageUploader({ multiple = false, initialUrl, onChange }: Props)
     }
   }
 
+  const buttonLabel = multiple ? "Añadir imágenes" : "Añadir imagen";
+
   return (
     <div className="space-y-3">
       <div>
-        <label className="block text-sm font-medium">
-          {multiple ? "Subir archivos" : "Subir archivo"}
+        <label
+          className={`inline-flex cursor-pointer items-center gap-2 rounded-[var(--radius-sm)] border px-4 py-2 text-sm font-medium transition-colors ${
+            busy ? "cursor-not-allowed opacity-60" : "hover:bg-[var(--bg-sunken)]"
+          }`}
+          style={{
+            borderColor: "var(--border-default)",
+            color: "var(--fg-1)",
+            background: "var(--bianco)",
+          }}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+            <line x1="12" y1="5" x2="12" y2="11" />
+            <line x1="9" y1="8" x2="15" y2="8" />
+          </svg>
+          {buttonLabel}
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple={multiple}
+            onChange={handleFiles}
+            disabled={busy}
+            className="sr-only"
+          />
         </label>
-        <input
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          multiple={multiple}
-          onChange={handleFiles}
-          disabled={busy}
-          className="mt-1 text-sm"
-        />
+        <p className="mt-1 text-xs" style={{ color: "var(--fg-3)" }}>
+          JPG, PNG o WebP · máximo 4 MB
+          {multiple ? " por archivo" : ""}.
+        </p>
         {busy && progress && (
-          <p className="mt-1 text-sm">
+          <p className="mt-2 text-sm">
             Subiendo {progress.done} / {progress.total}…
           </p>
         )}
         {error && (
-          <p className="mt-1 text-sm" style={{ color: "var(--terra-700)" }}>
+          <p className="mt-2 text-sm" style={{ color: "var(--terra-700)" }}>
             {error}
           </p>
         )}
@@ -84,7 +116,7 @@ export function ImageUploader({ multiple = false, initialUrl, onChange }: Props)
       {!multiple && (
         <>
           <div>
-            <label className="block text-sm font-medium">…o pegar URL</label>
+            <label className="block text-sm font-medium">… o pegar URL</label>
             <input
               type="url"
               value={url}

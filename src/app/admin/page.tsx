@@ -34,7 +34,7 @@ export default async function AdminDashboard() {
     },
     {
       href: "/admin/hero-images",
-      label: "Hero Images",
+      label: "Imágenes hero",
       count: heroImagesPublished?.value ?? 0,
       cta: "Gestionar",
     },
@@ -42,7 +42,7 @@ export default async function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl">Dashboard</h1>
+      <h1 className="text-3xl">Panel de administración</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {cards.map((c) => (
           <Link

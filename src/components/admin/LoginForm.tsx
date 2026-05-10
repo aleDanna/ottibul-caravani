@@ -16,7 +16,7 @@ export function LoginForm({ next }: { next?: string }) {
         <input name="email" type="email" required className="w-full border p-2" />
       </div>
       <div>
-        <label className="block text-sm font-medium">Password</label>
+        <label className="block text-sm font-medium">Contraseña</label>
         <input name="password" type="password" required className="w-full border p-2" />
       </div>
       {state.error && <p className="text-red-600">{state.error}</p>}
@@ -29,7 +29,7 @@ function SubmitBtn() {
   const { pending } = useFormStatus();
   return (
     <button type="submit" disabled={pending} className="w-full bg-black py-2 text-white">
-      {pending ? "..." : "Login"}
+      {pending ? "…" : "Acceder"}
     </button>
   );
 }

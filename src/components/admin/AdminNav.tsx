@@ -12,7 +12,7 @@ export function AdminNav({ user }: { user: { email: string } }) {
       <div className="mx-auto flex max-w-[1280px] items-center justify-between px-5 py-3 md:px-8">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <Link href="/admin" className="font-semibold">
-            Admin
+            Panel
           </Link>
           <Link href="/admin/vehicles" className="text-sm">
             Vehículos
@@ -21,14 +21,14 @@ export function AdminNav({ user }: { user: { email: string } }) {
             FAQs
           </Link>
           <Link href="/admin/hero-images" className="text-sm">
-            Hero Images
+            Imágenes hero
           </Link>
         </div>
         <div className="flex items-center gap-4 text-sm">
           <span style={{ color: "var(--fg-3)" }}>{user.email}</span>
           <form action="/admin/logout" method="post">
             <button type="submit" className="underline">
-              Logout
+              Cerrar sesión
             </button>
           </form>
         </div>

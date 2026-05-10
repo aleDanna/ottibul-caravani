@@ -81,7 +81,7 @@ export function ImageGalleryManager({
                   className="absolute top-1 left-1 rounded-[var(--radius-xs)] px-1.5 py-0.5 text-xs"
                   style={{ background: "var(--sole-500)", color: "var(--inchiostro-900)" }}
                 >
-                  Cover
+                  Portada
                 </span>
               )}
             </div>
@@ -94,7 +94,7 @@ export function ImageGalleryManager({
             />
             <div className="flex items-center justify-between text-sm">
               <button type="button" onClick={() => setCover(i)} className="underline">
-                {img.isCover ? "★ cover" : "Set cover"}
+                {img.isCover ? "★ Portada" : "Marcar portada"}
               </button>
               <div className="flex gap-1">
                 <button type="button" onClick={() => move(i, -1)} aria-label="Up">

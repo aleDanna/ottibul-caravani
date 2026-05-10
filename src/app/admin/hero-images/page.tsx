@@ -21,7 +21,7 @@ export default async function AdminHeroImagesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl">Hero Images</h1>
+        <h1 className="text-3xl">Imágenes hero</h1>
         <Link
           href="/admin/hero-images/new"
           className="rounded px-4 py-2 text-white"
