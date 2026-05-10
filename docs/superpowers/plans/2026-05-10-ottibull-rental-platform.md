@@ -482,6 +482,82 @@ git commit -m "feat(db): drizzle schema and initial migration"
 
 ---
 
+### Task 3.5: FAQ schema + migration
+
+**Files:**
+- Modify: `src/db/schema.ts`
+- Generate: `drizzle/migrations/0001_*.sql`
+
+This task extends the schema after Task 3 already shipped. The FAQ tables hold dynamic FAQ entries managed via the admin (Task 21.5) and rendered on the public `/[locale]/faq` page (Task 11.5).
+
+- [ ] **Step 1: Append FAQ tables to schema**
+
+Add to `src/db/schema.ts` (do NOT touch existing exports — append at the end):
+
+```ts
+export const faqStatus = pgEnum('faq_status', ['draft', 'published']);
+
+export const faqs = pgTable('faqs', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  sortOrder: integer('sort_order').default(0).notNull(),
+  status: faqStatus('status').default('draft').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const faqTranslations = pgTable(
+  'faq_translations',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    faqId: uuid('faq_id').notNull().references(() => faqs.id, { onDelete: 'cascade' }),
+    locale: localeEnum('locale').notNull(),
+    question: text('question').notNull(),
+    answer: text('answer').notNull(),
+  },
+  (t) => ({
+    faqLocaleUnique: uniqueIndex('faq_translations_faq_locale_unique').on(t.faqId, t.locale),
+  }),
+);
+
+export const faqsRelations = relations(faqs, ({ many }) => ({
+  translations: many(faqTranslations),
+}));
+
+export const faqTranslationsRelations = relations(faqTranslations, ({ one }) => ({
+  faq: one(faqs, { fields: [faqTranslations.faqId], references: [faqs.id] }),
+}));
+```
+
+The enum reuses the existing `localeEnum` from Task 3 — don't redefine it.
+
+- [ ] **Step 2: Generate migration**
+
+```bash
+pnpm db:generate
+```
+Expected: `drizzle/migrations/0001_*.sql` containing `CREATE TYPE faq_status`, two `CREATE TABLE`s, FK cascade, unique index `(faq_id, locale)`. Inspect the SQL.
+
+- [ ] **Step 3: Apply migration**
+
+```bash
+pnpm db:migrate
+docker compose exec -T postgres psql -U ottibull -d ottibull -c "\dt"
+```
+Expect 6 tables: `admin_users`, `vehicles`, `vehicle_translations`, `vehicle_images`, `faqs`, `faq_translations`.
+
+- [ ] **Step 4: Verify**
+
+`pnpm typecheck`, `pnpm lint`, `pnpm format:check` — all exit 0.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add src/db/schema.ts drizzle/migrations
+git commit -m "feat(db): add faqs + faq_translations tables and migration"
+```
+
+---
+
 ### Task 4: i18n — next-intl routing + middleware
 
 **Files:**
@@ -1050,6 +1126,9 @@ export function Header({ locale }: { locale: Locale }) {
         <nav className="flex items-center gap-6">
           <Link href={`/${locale}`}>{t('home')}</Link>
           <Link href={`/${locale}/catalog`}>{t('catalog')}</Link>
+          <Link href={`/${locale}/about`}>{t('about')}</Link>
+          <Link href={`/${locale}/useful-links`}>{t('usefulLinks')}</Link>
+          <Link href={`/${locale}/faq`}>{t('faq')}</Link>
           <LanguageSwitcher currentLocale={locale} />
         </nav>
       </div>
@@ -1829,6 +1908,158 @@ Expected: build succeeds.
 ```bash
 git add src/app/[locale]/vehicles src/components/public/VehicleGallery.tsx src/components/public/VehicleAttributeTable.tsx
 git commit -m "feat(public): vehicle detail page with gallery and attributes table"
+```
+
+---
+
+### Task 11.5: About + Useful Links + FAQ public pages
+
+**Files:**
+- Create: `src/app/[locale]/about/page.tsx`
+- Create: `src/app/[locale]/useful-links/page.tsx`
+- Create: `src/app/[locale]/faq/page.tsx`
+- Create: `src/components/public/FaqAccordion.tsx`
+- Create: `src/components/public/UsefulLinkCard.tsx`
+- Modify: `src/messages/{es,ca,en}.json` (add `about`, `usefulLinks`, `faq`, `nav.about`, `nav.usefulLinks`, `nav.faq` namespaces/keys)
+- Seed script: `scripts/seed-faqs.ts` to insert the 9 FAQ entries from `docs/content/ottibull-source-content.md` in all 3 locales.
+- Modify: `package.json` (add `db:seed:faqs`).
+
+Sourcing: pull the verbatim Spanish copy from `docs/content/ottibull-source-content.md`. Translate to Catalan (`ca`) and English (`en`) preserving brand names, monetary amounts (900€, 60€), durations, and link URLs.
+
+- [ ] **Step 1: Extend message JSONs**
+
+Add to each `src/messages/{locale}.json` (using `es` as the source-of-truth structure):
+
+```json
+{
+  "nav": { ..., "about": "Nosotros", "usefulLinks": "Enlaces de Interés", "faq": "FAQ" },
+  "about": {
+    "metaTitle": "Nosotros | Otti Bull",
+    "metaDescription": "Otti Bull SL — expertos en alquiler de autocaravanas en Barcelona.",
+    "heroTitle": "Otti Bull SL",
+    "heroSubtitle": "Expertos en Caravaning desde Barcelona",
+    "story": [
+      "En Otti Bull Caravaning, somos apasionados por la libertad …",
+      "Nuestro compromiso es proporcionarte vehículos en perfecto estado …",
+      "Ya sea que planees una escapada de fin de semana …"
+    ],
+    "stats": [
+      { "value": "5+", "label": "Años de experiencia" },
+      { "value": "2", "label": "Vehículos premium" },
+      { "value": "500+", "label": "Clientes satisfechos" }
+    ],
+    "whyTitle": "¿Por qué elegirnos?",
+    "whyBullets": [
+      "Vehículos nuevos y bien mantenidos",
+      "Precios competitivos sin sorpresas",
+      "Atención personalizada",
+      "Flexibilidad en recogida y entrega"
+    ]
+  },
+  "usefulLinks": {
+    "metaTitle": "Enlaces de Interés | Otti Bull",
+    "metaDescription": "Recursos y webs de referencia para planificar tu aventura en autocaravana.",
+    "title": "Enlaces de Interés",
+    "subtitle": "Recursos y webs de referencia para planificar mejor tu aventura en autocaravana",
+    "links": [
+      { "name": "Turismo de España", "url": "https://www.spain.info/", "description": "Página web que ofrece información turística …" },
+      { "name": "Park4Night", "url": "https://park4night.com/", "description": "Aplicación móvil y plataforma web que proporciona …" },
+      { "name": "Campings Online", "url": "https://www.campingsonline.com/", "description": "Plataforma online que ofrece información sobre campings …" }
+    ]
+  },
+  "faq": {
+    "metaTitle": "Preguntas Frecuentes | Otti Bull",
+    "metaDescription": "Respuestas a las dudas más comunes sobre el alquiler de autocaravanas en Otti Bull.",
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Encuentra respuestas a las dudas más comunes sobre nuestro servicio de alquiler",
+    "empty": "No hay preguntas publicadas todavía."
+  }
+}
+```
+
+Mirror the structure for `ca` and `en`. Use the source-content doc for verbatim Spanish copy and translate the rest.
+
+- [ ] **Step 2: About page**
+
+`src/app/[locale]/about/page.tsx`: Server Component, `force-static`, `generateMetadata` reads `about.metaTitle/metaDescription`. Renders hero (heroTitle + heroSubtitle), story paragraphs, stats grid, why-bullets list. Use design system tokens (bosco, sole) once Task 7 lands the global CSS.
+
+- [ ] **Step 3: Useful Links page**
+
+`src/app/[locale]/useful-links/page.tsx`: Server Component, `force-static`. Renders title + subtitle + 3-card grid. Each card uses `UsefulLinkCard` component (props: name, url, description) with `target="_blank"` and external-link icon.
+
+- [ ] **Step 4: FAQ page**
+
+`src/app/[locale]/faq/page.tsx`: Server Component, `force-static` + ISR (revalidatePath driven by admin mutations).
+```ts
+const faqRows = await db.query.faqs.findMany({
+  where: eq(faqs.status, 'published'),
+  with: { translations: true },
+  orderBy: [asc(faqs.sortOrder), asc(faqs.createdAt)],
+});
+const items = faqRows
+  .map((f) => {
+    const tr = f.translations.find((t) => t.locale === locale);
+    return tr ? { id: f.id, question: tr.question, answer: tr.answer } : null;
+  })
+  .filter(Boolean);
+```
+Render `<FaqAccordion items={items} />` (client component with `useState` for open index, chevron rotation per design).
+
+- [ ] **Step 5: Seed FAQs from source content**
+
+`scripts/seed-faqs.ts`:
+```ts
+import { db } from '../src/db/client';
+import { faqs, faqTranslations } from '../src/db/schema';
+import { eq } from 'drizzle-orm';
+
+type Entry = { es: { q: string; a: string }; ca: { q: string; a: string }; en: { q: string; a: string } };
+
+const ENTRIES: Entry[] = [ /* 9 entries from docs/content/ottibull-source-content.md, translated for ca + en */ ];
+
+async function main() {
+  for (let i = 0; i < ENTRIES.length; i++) {
+    const e = ENTRIES[i];
+    // Idempotent: match by ES question (or use a stable slug)
+    const [existing] = await db
+      .select({ id: faqs.id })
+      .from(faqs)
+      .innerJoin(faqTranslations, eq(faqs.id, faqTranslations.faqId))
+      .where(eq(faqTranslations.question, e.es.q))
+      .limit(1);
+    let faqId = existing?.id;
+    if (!faqId) {
+      const [created] = await db.insert(faqs).values({ sortOrder: i, status: 'published' }).returning({ id: faqs.id });
+      faqId = created.id;
+      await db.insert(faqTranslations).values([
+        { faqId, locale: 'es', question: e.es.q, answer: e.es.a },
+        { faqId, locale: 'ca', question: e.ca.q, answer: e.ca.a },
+        { faqId, locale: 'en', question: e.en.q, answer: e.en.a },
+      ]);
+    }
+  }
+  process.exit(0);
+}
+main().catch((err) => { console.error(err); process.exit(1); });
+```
+
+Add to `package.json`:
+```json
+"db:seed:faqs": "dotenv -e .env.local -- tsx scripts/seed-faqs.ts"
+```
+
+Run: `pnpm db:seed:faqs`. Verify with psql: `SELECT count(*) FROM faqs;` should return 9, `SELECT count(*) FROM faq_translations;` should return 27.
+
+- [ ] **Step 6: Verify**
+
+`pnpm dev`, visit `/es/about`, `/es/useful-links`, `/es/faq`. All render. FAQ accordion expands on click.
+
+- [ ] **Step 7: Commit**
+
+Two commits make sense (page code + seed data), or one combined. Either way:
+```bash
+git add src/messages src/app/[locale]/about src/app/[locale]/useful-links src/app/[locale]/faq src/components/public/FaqAccordion.tsx src/components/public/UsefulLinkCard.tsx scripts/seed-faqs.ts package.json
+git commit -m "feat(public): about, useful-links, faq pages with seed"
 ```
 
 ---
@@ -3621,6 +3852,164 @@ git commit -m "feat(admin): vehicle form with attributes, translations, image ga
 
 ---
 
+### Task 21.5: Admin FAQ CRUD
+
+**Files:**
+- Create: `src/app/admin/faqs/page.tsx` (list)
+- Create: `src/app/admin/faqs/new/page.tsx`
+- Create: `src/app/admin/faqs/[id]/page.tsx`
+- Create: `src/components/admin/FaqListTable.tsx`
+- Create: `src/components/admin/FaqForm.tsx`
+- Create: `src/lib/faq-form-schema.ts`
+- Create: `src/app/actions/faqs.ts`
+- Modify: `src/components/admin/AdminNav.tsx` (add link to `/admin/faqs`)
+
+Mirror the vehicle CRUD pattern from Task 19 + Task 21, scaled down (no images, no type-specific attributes, just a Q+A per locale).
+
+- [ ] **Step 1: Zod form schema**
+
+`src/lib/faq-form-schema.ts`:
+```ts
+import { z } from 'zod';
+
+const translation = z.object({
+  locale: z.enum(['es', 'ca', 'en']),
+  question: z.string().min(2),
+  answer: z.string().min(2),
+});
+
+export const faqFormSchema = z.object({
+  status: z.enum(['draft', 'published']),
+  sortOrder: z.coerce.number().int().default(0),
+  translations: z.array(translation).length(3),
+});
+
+export type FaqFormInput = z.infer<typeof faqFormSchema>;
+
+export function validateForPublish(input: FaqFormInput): string[] {
+  const errors: string[] = [];
+  if (input.status === 'published') {
+    const locales = input.translations.map((t) => t.locale);
+    if (!['es', 'ca', 'en'].every((l) => locales.includes(l as 'es'))) {
+      errors.push('All 3 translations (es/ca/en) required to publish');
+    }
+  }
+  return errors;
+}
+```
+
+- [ ] **Step 2: Server Actions**
+
+`src/app/actions/faqs.ts`:
+```ts
+'use server';
+
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import { eq } from 'drizzle-orm';
+import { db } from '@/db/client';
+import { faqs, faqTranslations } from '@/db/schema';
+import { requireAdminSession } from '@/lib/auth';
+import { faqFormSchema, validateForPublish, type FaqFormInput } from '@/lib/faq-form-schema';
+import { routing } from '@/i18n/routing';
+
+function revalidateFaq() {
+  for (const locale of routing.locales) revalidatePath(`/${locale}/faq`);
+}
+
+export async function createFaqAction(input: FaqFormInput) {
+  await requireAdminSession();
+  const parsed = faqFormSchema.safeParse(input);
+  if (!parsed.success) return { error: 'Validation failed' };
+  const errors = validateForPublish(parsed.data);
+  if (errors.length) return { error: errors.join('; ') };
+
+  const [row] = await db
+    .insert(faqs)
+    .values({ status: parsed.data.status, sortOrder: parsed.data.sortOrder })
+    .returning();
+  await db.insert(faqTranslations).values(
+    parsed.data.translations.map((t) => ({
+      faqId: row.id,
+      locale: t.locale,
+      question: t.question,
+      answer: t.answer,
+    })),
+  );
+  revalidateFaq();
+  redirect(`/admin/faqs/${row.id}`);
+}
+
+export async function updateFaqAction(id: string, input: FaqFormInput) {
+  await requireAdminSession();
+  const parsed = faqFormSchema.safeParse(input);
+  if (!parsed.success) return { error: 'Validation failed' };
+  const errors = validateForPublish(parsed.data);
+  if (errors.length) return { error: errors.join('; ') };
+
+  await db.update(faqs).set({
+    status: parsed.data.status,
+    sortOrder: parsed.data.sortOrder,
+    updatedAt: new Date(),
+  }).where(eq(faqs.id, id));
+
+  await db.delete(faqTranslations).where(eq(faqTranslations.faqId, id));
+  await db.insert(faqTranslations).values(
+    parsed.data.translations.map((t) => ({
+      faqId: id, locale: t.locale, question: t.question, answer: t.answer,
+    })),
+  );
+  revalidateFaq();
+  return { ok: true };
+}
+
+export async function deleteFaqAction(id: string) {
+  await requireAdminSession();
+  await db.delete(faqs).where(eq(faqs.id, id));
+  revalidateFaq();
+  redirect('/admin/faqs');
+}
+```
+
+- [ ] **Step 3: List page + table**
+
+`src/app/admin/faqs/page.tsx`: Server Component, lists all FAQs (draft + published) ordered by `sort_order` then `updated_at`. Columns: question (es), status badge, sort_order, updated_at, edit link.
+
+`src/components/admin/FaqListTable.tsx`: rendering table.
+
+- [ ] **Step 4: Form component**
+
+`src/components/admin/FaqForm.tsx`: client component, mirrors `VehicleForm` shape.
+- Common: status select, sort_order input.
+- Translations: 3 tabs (es/ca/en), each tab: question (single-line input), answer (textarea, plain text — no markdown).
+- Buttons: Save draft, Publish, Delete (edit mode only).
+
+- [ ] **Step 5: New + Edit pages**
+
+`src/app/admin/faqs/new/page.tsx`: renders empty `<FaqForm mode="create" />`.
+`src/app/admin/faqs/[id]/page.tsx`: fetches FAQ + translations, renders `<FaqForm mode="edit" initial={...} />`.
+
+- [ ] **Step 6: Wire admin nav**
+
+Modify `src/components/admin/AdminNav.tsx` (built in Task 18) to include a link to `/admin/faqs` next to "Vehicles".
+
+- [ ] **Step 7: Smoke test**
+
+Log in, create a draft FAQ, fill 3 translations, publish, view it at `/es/faq`. Edit it, change a translation, save, refresh public page. Delete it, confirm gone.
+
+- [ ] **Step 8: Verify**
+
+`pnpm typecheck`, `pnpm lint`, `pnpm format:check` — all 0. `pnpm build` — succeeds.
+
+- [ ] **Step 9: Commit**
+
+```bash
+git add src/app/admin/faqs src/app/actions/faqs.ts src/lib/faq-form-schema.ts src/components/admin/FaqListTable.tsx src/components/admin/FaqForm.tsx src/components/admin/AdminNav.tsx
+git commit -m "feat(admin): faq CRUD with translations"
+```
+
+---
+
 ## Phase 7 — SEO
 
 ### Task 22: Sitemap + robots
@@ -3663,7 +4052,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     columns: { slug: true, updatedAt: true },
   });
 
-  const staticPaths = ['', '/catalog', '/privacy', '/terms'];
+  const staticPaths = ['', '/catalog', '/about', '/useful-links', '/faq', '/privacy', '/terms'];
   const entries: MetadataRoute.Sitemap = [];
 
   for (const path of staticPaths) {

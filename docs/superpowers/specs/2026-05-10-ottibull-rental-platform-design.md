@@ -12,7 +12,8 @@ Web platform for renting campers, motorcycles, and other vehicles in Barcelona. 
 
 - Public catalog of vehicles, browseable in 3 languages, with strong SEO (sitemap, hreflang, JSON-LD, OG, Lighthouse > 90).
 - Inquiry flow: user fills form (dates, contact, guests) → email auto-sent to owner + user redirected to a "thank-you" page with a pre-filled WhatsApp button to message the owner.
-- Admin panel: secure login (single user), CRUD on vehicles with translations and image gallery.
+- Public content pages: **About**, **Useful Links**, and **FAQ**, with content imported from https://ottibull.com/ in all 3 supported languages. About and Useful Links are static (translatable JSON); FAQ entries live in the DB so an admin can add more over time.
+- Admin panel: secure login (single user), CRUD on vehicles with translations and image gallery, **plus CRUD on FAQ entries** with per-locale question/answer.
 - Deployable on Vercel with zero recurring infra cost at MVP volumes.
 
 ## Non-goals (MVP)
@@ -22,9 +23,11 @@ Web platform for renting campers, motorcycles, and other vehicles in Barcelona. 
 - Online payment / booking confirmation.
 - Persistent storage of inquiries in DB (lives only in email + WhatsApp).
 - Multi-admin accounts.
-- Admin UI for managing vehicle types or global settings (these live in code/env).
+- Admin UI for managing vehicle types, the About/Useful-Links page content, or global settings (these live in code/env).
 - Server-initiated WhatsApp via Business API (we use the click-to-chat `wa.me` link instead).
 - Blog / content marketing module.
+- Search results page with advanced filters beyond the catalog's `?type=` filter (deferred — not part of MVP).
+- Booking flow / payment / Stripe preauth (deferred — not part of MVP).
 
 ## Tech stack
 
@@ -58,6 +61,9 @@ src/
 │   │   ├── page.tsx                    # home
 │   │   ├── catalog/page.tsx            # vehicle list, filter ?type=
 │   │   ├── vehicles/[slug]/page.tsx    # vehicle detail + inquiry form
+│   │   ├── about/page.tsx              # company story (static, translated via messages)
+│   │   ├── useful-links/page.tsx       # 3 curated external resources (static, translated)
+│   │   ├── faq/page.tsx                # accordion of DB-backed FAQ entries
 │   │   ├── thank-you/page.tsx          # post-submit, WhatsApp button
 │   │   ├── privacy/page.tsx            # MDX
 │   │   └── terms/page.tsx              # MDX
@@ -66,6 +72,10 @@ src/
 │   │   ├── layout.tsx                  # session guard + nav
 │   │   ├── page.tsx                    # dashboard / vehicle list
 │   │   ├── vehicles/
+│   │   │   ├── new/page.tsx
+│   │   │   └── [id]/page.tsx           # edit
+│   │   ├── faqs/
+│   │   │   ├── page.tsx                # list
 │   │   │   ├── new/page.tsx
 │   │   │   └── [id]/page.tsx           # edit
 │   │   └── logout/route.ts
@@ -152,6 +162,25 @@ is_cover    boolean default false   -- exactly one cover per vehicle (app-level 
 created_at  timestamptz
 ```
 
+### `faqs`
+```
+id              uuid pk
+sort_order      int default 0
+status          faq_status default 'draft'  -- enum: 'draft' | 'published'
+created_at, updated_at  timestamptz
+```
+A FAQ requires all 3 translations to be `published` (validated at admin form level), same rule as vehicles.
+
+### `faq_translations`
+```
+id            uuid pk
+faq_id        uuid fk faqs(id) on delete cascade
+locale        locale not null  -- reuses the existing 'es' | 'ca' | 'en' enum
+question      text not null
+answer        text not null
+unique(faq_id, locale)
+```
+
 **No `inquiries` table.** Lead data lives only in email (Resend retention) + the user's WhatsApp.
 
 NextAuth uses JWT strategy → no `sessions`/`accounts` tables required.
@@ -183,6 +212,23 @@ NextAuth uses JWT strategy → no `sessions`/`accounts` tables required.
 - Confirmation message.
 - Primary CTA: "Continue on WhatsApp" → opens `wa.me/<phone>?text=<encoded>`.
 - Secondary CTA: "Back to catalog".
+
+**About `/[locale]/about`**
+- Static content rendered from `messages/{locale}.json` (`about` namespace).
+- Source content (Spanish) imported from ottibull.com — see `docs/content/ottibull-source-content.md` for the verbatim copy and translation guidance for `ca`/`en`.
+- Sections: hero (title + tagline), 3-paragraph story, stats block (5+ años / 2 vehículos / 500+ clientes), "Why us" bullets.
+- Render: standard public layout, container 1280px, section padding per design tokens.
+
+**Useful Links `/[locale]/useful-links`**
+- Static content rendered from `messages/{locale}.json` (`usefulLinks` namespace).
+- 3 curated external resources: Turismo de España, Park4Night, Campings Online. Names + descriptions (per locale) + URLs (locale-neutral).
+- Render: 3-card grid with `target="_blank" rel="noopener noreferrer"` external-link icons.
+
+**FAQ `/[locale]/faq`**
+- DB-backed: queries `faqs` (status='published') joined with `faq_translations` for the current locale, ordered by `sort_order`.
+- 9 entries seeded at launch from ottibull.com (see source-content doc); admin can add more.
+- Render: page hero + accordion list. Click toggles open state, chevron rotates 180° per design system.
+- If a FAQ exists in `es` but lacks `ca`/`en` translations: do NOT show the entry in those locales (publish gating already prevents this, but the renderer falls back to skipping rather than showing empty content).
 
 ### Inquiry form fields
 
@@ -251,6 +297,20 @@ Sections in the form:
 Actions: "Save draft", "Publish", "Delete" (hard delete with confirmation).
 
 After mutation: `revalidatePath('/[locale]/catalog')` and `revalidatePath('/[locale]/vehicles/[slug]')`.
+
+**`/admin/faqs` — FAQ list**
+- Table: question (es), status, sort_order, updated_at, actions (edit / delete).
+- Sorted by `sort_order` then `updated_at desc`.
+- CTA: "New FAQ".
+
+**`/admin/faqs/new` and `/admin/faqs/[id]` — FAQ form**
+Sections in the form:
+1. **Common data**: status (draft/published), sort_order.
+2. **Translations**: tabs `es | ca | en`, each with question (single-line input) and answer (textarea, plain text — markdown not needed). All 3 required to publish.
+
+Actions: "Save draft", "Publish", "Delete" (hard delete with confirmation).
+
+After mutation: `revalidatePath('/[locale]/faq')` for all locales.
 
 ### Image upload flow
 
@@ -328,10 +388,11 @@ Templates per locale in `lib/whatsapp-templates/{es,ca,en}.ts`. The URL is HMAC-
 ### Sitemap & robots
 
 `app/sitemap.ts` (dynamic):
-- Home + catalog + privacy + terms × 3 locales.
+- Home + catalog + about + useful-links + faq + privacy + terms × 3 locales.
 - All `vehicles` with `status='published'` × 3 locales.
 - `xhtml:link rel="alternate" hreflang` for each entry.
-- `lastmod = updated_at`, `changefreq = weekly`, `priority = 0.8` (vehicles), `1.0` (home).
+- `lastmod`: vehicles use `updated_at`; the FAQ page lastmod is the max `updated_at` across published `faqs`; static pages omit `lastmod`.
+- `changefreq = weekly`, `priority = 1.0` (home), `0.8` (vehicles), `0.6` (about/useful-links/faq), `0.4` (privacy/terms).
 
 `app/robots.ts`:
 ```
