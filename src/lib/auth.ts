@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db/client";
 import { adminUsers } from "@/db/schema";
+import { authConfig } from "./auth.config";
 
 const credentialsSchema = z.object({
   email: z.string().email(),
@@ -12,8 +13,7 @@ const credentialsSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  session: { strategy: "jwt", maxAge: 7 * 24 * 60 * 60, updateAge: 24 * 60 * 60 },
-  pages: { signIn: "/admin/login" },
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
