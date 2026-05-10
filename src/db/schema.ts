@@ -103,3 +103,37 @@ export const vehicleTranslationsRelations = relations(vehicleTranslations, ({ on
 export const vehicleImagesRelations = relations(vehicleImages, ({ one }) => ({
   vehicle: one(vehicles, { fields: [vehicleImages.vehicleId], references: [vehicles.id] }),
 }));
+
+export const faqStatus = pgEnum("faq_status", ["draft", "published"]);
+
+export const faqs = pgTable("faqs", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  sortOrder: integer("sort_order").default(0).notNull(),
+  status: faqStatus("status").default("draft").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const faqTranslations = pgTable(
+  "faq_translations",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    faqId: uuid("faq_id")
+      .notNull()
+      .references(() => faqs.id, { onDelete: "cascade" }),
+    locale: localeEnum("locale").notNull(),
+    question: text("question").notNull(),
+    answer: text("answer").notNull(),
+  },
+  (t) => ({
+    faqLocaleUnique: uniqueIndex("faq_translations_faq_locale_unique").on(t.faqId, t.locale),
+  }),
+);
+
+export const faqsRelations = relations(faqs, ({ many }) => ({
+  translations: many(faqTranslations),
+}));
+
+export const faqTranslationsRelations = relations(faqTranslations, ({ one }) => ({
+  faq: one(faqs, { fields: [faqTranslations.faqId], references: [faqs.id] }),
+}));
