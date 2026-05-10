@@ -6,6 +6,7 @@ import { Instrument_Serif, Manrope, JetBrains_Mono } from "next/font/google";
 import { routing, type Locale } from "@/i18n/routing";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
+import { organizationJsonLd } from "@/lib/seo";
 import "../globals.css";
 
 const serif = Instrument_Serif({
@@ -48,6 +49,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
       <body className="flex min-h-screen flex-col bg-[var(--bg-page)] text-[var(--fg-1)]">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        />
         <NextIntlClientProvider messages={messages}>
           <Header locale={locale as Locale} />
           <main className="flex-1">{children}</main>

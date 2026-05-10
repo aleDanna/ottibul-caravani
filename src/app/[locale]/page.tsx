@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { vehicles, heroImages } from "@/db/schema";
@@ -10,8 +10,19 @@ import { HomeHowItWorks } from "@/components/public/HomeHowItWorks";
 import { HomeTestimonials } from "@/components/public/HomeTestimonials";
 import { HomeFinalCta } from "@/components/public/HomeFinalCta";
 import type { VehicleCardData } from "@/components/public/VehicleCard";
+import { localeAlternates } from "@/lib/seo";
 
 export const dynamic = "force-static";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "home" });
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: localeAlternates(`/${locale}`),
+  };
+}
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
