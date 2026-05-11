@@ -56,3 +56,4 @@ pnpm-debug.log*
 # Misc
 *.pem
 *.zip
+.env*.local
