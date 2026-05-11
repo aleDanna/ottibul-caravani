@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Locale } from "@/i18n/routing";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -15,6 +16,11 @@ export function MobileMenu({
   currentLocale: Locale;
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -24,6 +30,38 @@ export function MobileMenu({
       document.body.style.overflow = original;
     };
   }, [open]);
+
+  const panel = (
+    <div
+      className="fixed inset-x-0 bottom-0 top-[72px] z-[60] flex flex-col"
+      style={{ background: "var(--bg-page)" }}
+      role="dialog"
+      aria-modal="true"
+    >
+      <nav className="flex flex-1 flex-col gap-1 px-5 pt-6">
+        {items.map((it) => (
+          <Link
+            key={it.href}
+            href={it.href}
+            className="rounded-md py-3 text-2xl"
+            style={{
+              color: "var(--fg-1)",
+              fontFamily: "var(--font-serif)",
+            }}
+            onClick={() => setOpen(false)}
+          >
+            {it.label}
+          </Link>
+        ))}
+      </nav>
+      <div
+        className="border-t px-5 py-5"
+        style={{ borderColor: "var(--border-subtle)" }}
+      >
+        <LanguageSwitcher currentLocale={currentLocale} />
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -61,37 +99,7 @@ export function MobileMenu({
         </svg>
       </button>
 
-      {open && (
-        <div
-          className="fixed inset-0 top-[72px] z-40 flex flex-col"
-          style={{ background: "var(--bg-page)" }}
-          role="dialog"
-          aria-modal="true"
-        >
-          <nav className="flex flex-1 flex-col gap-1 px-5 pt-6">
-            {items.map((it) => (
-              <Link
-                key={it.href}
-                href={it.href}
-                className="rounded-md py-3 text-2xl"
-                style={{
-                  color: "var(--fg-1)",
-                  fontFamily: "var(--font-serif)",
-                }}
-                onClick={() => setOpen(false)}
-              >
-                {it.label}
-              </Link>
-            ))}
-          </nav>
-          <div
-            className="border-t px-5 py-5"
-            style={{ borderColor: "var(--border-subtle)" }}
-          >
-            <LanguageSwitcher currentLocale={currentLocale} />
-          </div>
-        </div>
-      )}
+      {mounted && open ? createPortal(panel, document.body) : null}
     </>
   );
 }
