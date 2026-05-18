@@ -1,36 +1,15 @@
 import { NextResponse } from "next/server";
-import { put } from "@vercel/blob";
+import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { auth } from "@/lib/auth";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
-// Vercel Hobby plan caps function request body at 4.5 MB. Stay safely under.
-const MAX_BYTES = 4 * 1024 * 1024;
 
 export async function POST(request: Request): Promise<NextResponse> {
-  const session = await auth();
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  let formData: FormData;
+  let body: HandleUploadBody;
   try {
-    formData = await request.formData();
+    body = (await request.json()) as HandleUploadBody;
   } catch {
-    return NextResponse.json({ error: "Expected multipart/form-data" }, { status: 400 });
-  }
-
-  const file = formData.get("file");
-  if (!(file instanceof File)) {
-    return NextResponse.json({ error: "No file provided" }, { status: 400 });
-  }
-  if (!ALLOWED_TYPES.includes(file.type)) {
-    return NextResponse.json(
-      { error: "Invalid file type. Allowed: JPEG, PNG, WebP." },
-      { status: 400 },
-    );
-  }
-  if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: "File too large (max 4 MB)." }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
@@ -40,11 +19,27 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  const blob = await put(file.name, file, {
-    access: "public",
-    addRandomSuffix: true,
-    contentType: file.type,
-  });
-
-  return NextResponse.json({ url: blob.url });
+  try {
+    const json = await handleUpload({
+      body,
+      request,
+      onBeforeGenerateToken: async () => {
+        const session = await auth();
+        if (!session?.user) throw new Error("Unauthorized");
+        return {
+          allowedContentTypes: ALLOWED_TYPES,
+          addRandomSuffix: true,
+          tokenPayload: JSON.stringify({ userId: session.user.id }),
+        };
+      },
+      onUploadCompleted: async () => {
+        // Image URLs are persisted when the admin saves the vehicle form.
+      },
+    });
+    return NextResponse.json(json);
+  } catch (err) {
+    const message = (err as Error).message ?? "Upload failed";
+    const status = message === "Unauthorized" ? 401 : 400;
+    return NextResponse.json({ error: message }, { status });
+  }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { upload } from "@vercel/blob/client";
 
 type Props = {
   multiple?: boolean;
@@ -9,18 +10,12 @@ type Props = {
 };
 
 async function uploadOne(file: File): Promise<string> {
-  const formData = new FormData();
-  formData.append("file", file);
-  const res = await fetch("/api/blob-upload", {
-    method: "POST",
-    body: formData,
+  const blob = await upload(file.name, file, {
+    access: "public",
+    handleUploadUrl: "/api/blob-upload",
+    contentType: file.type,
   });
-  if (!res.ok) {
-    const data = (await res.json().catch(() => ({}))) as { error?: string };
-    throw new Error(data.error ?? `HTTP ${res.status}`);
-  }
-  const { url } = (await res.json()) as { url: string };
-  return url;
+  return blob.url;
 }
 
 export function ImageUploader({ multiple = false, initialUrl, onChange }: Props) {
@@ -99,8 +94,7 @@ export function ImageUploader({ multiple = false, initialUrl, onChange }: Props)
           />
         </label>
         <p className="mt-1 text-xs" style={{ color: "var(--fg-3)" }}>
-          JPG, PNG o WebP · máximo 4 MB
-          {multiple ? " por archivo" : ""}.
+          JPG, PNG o WebP.
         </p>
         {busy && progress && (
           <p className="mt-2 text-sm">
