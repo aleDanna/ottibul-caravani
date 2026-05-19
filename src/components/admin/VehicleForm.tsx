@@ -11,24 +11,23 @@ import type { VehicleFormInput } from "@/lib/vehicle-form-schema";
 import { VehicleAttributesFields } from "./VehicleAttributesFields";
 import { VehicleTranslationsTabs } from "./VehicleTranslationsTabs";
 import { ImageGalleryManager } from "./ImageGalleryManager";
+import { NumberInput } from "./NumberInput";
 
 type Props = { mode: "create" } | { mode: "edit"; initial: VehicleFormInput & { id: string } };
 
 const empty: VehicleFormInput = {
-  slug: "",
   type: "camper",
   basePricePerDay: 0,
   minRentalDays: 1,
   maxRentalDays: null,
   location: "Barcelona",
   attributes: {},
-  status: "draft",
   featured: false,
   sortOrder: 0,
   translations: [
-    { locale: "es", title: "", description: "", metaTitle: "", metaDescription: "" },
-    { locale: "ca", title: "", description: "", metaTitle: "", metaDescription: "" },
-    { locale: "en", title: "", description: "", metaTitle: "", metaDescription: "" },
+    { locale: "es", title: "", description: "" },
+    { locale: "ca", title: "", description: "" },
+    { locale: "en", title: "", description: "" },
   ],
   images: [],
 };
@@ -52,8 +51,14 @@ export function VehicleForm(props: Props) {
         props.mode === "create"
           ? await createVehicleAction(data)
           : await updateVehicleAction((props as { initial: { id: string } }).initial.id, data);
-      if (result && "error" in result && result.error) setError(result.error);
-      else if (props.mode === "edit") router.refresh();
+      if (result && "error" in result && result.error) {
+        setError(result.error);
+        return;
+      }
+      // Always navigate back to the vehicles list so the admin gets visible
+      // confirmation that the save succeeded.
+      router.push("/admin/vehicles");
+      router.refresh();
     });
   }
 
@@ -75,14 +80,6 @@ export function VehicleForm(props: Props) {
         style={{ borderColor: "var(--border-subtle)" }}
       >
         <legend className="px-2 font-semibold">Datos comunes</legend>
-        <Row label="Slug">
-          <input
-            value={data.slug}
-            onChange={(e) => update("slug", e.target.value)}
-            className={`${inputCls} w-full`}
-            style={inputStyle}
-          />
-        </Row>
         <Row label="Tipo">
           <select
             value={data.type}
@@ -98,30 +95,33 @@ export function VehicleForm(props: Props) {
           </select>
         </Row>
         <Row label="Precio/día (€)">
-          <input
-            type="number"
+          <NumberInput
             step="0.01"
+            min="0"
             value={data.basePricePerDay}
-            onChange={(e) => update("basePricePerDay", Number(e.target.value))}
+            emptyValue={0}
+            onChange={(n) => update("basePricePerDay", n ?? 0)}
             className={inputCls}
             style={inputStyle}
+            placeholder="0"
           />
         </Row>
         <Row label="Días mín / máx">
           <div className="flex gap-2">
-            <input
-              type="number"
+            <NumberInput
+              min="1"
               value={data.minRentalDays}
-              onChange={(e) => update("minRentalDays", Number(e.target.value))}
+              emptyValue={1}
+              onChange={(n) => update("minRentalDays", n ?? 1)}
               className={`${inputCls} w-24`}
               style={inputStyle}
+              placeholder="1"
             />
-            <input
-              type="number"
-              value={data.maxRentalDays ?? ""}
-              onChange={(e) =>
-                update("maxRentalDays", e.target.value ? Number(e.target.value) : null)
-              }
+            <NumberInput
+              min="1"
+              value={data.maxRentalDays}
+              emptyValue={null}
+              onChange={(n) => update("maxRentalDays", n)}
               className={`${inputCls} w-24`}
               style={inputStyle}
               placeholder="—"
@@ -136,24 +136,14 @@ export function VehicleForm(props: Props) {
             style={inputStyle}
           />
         </Row>
-        <Row label="Estado">
-          <select
-            value={data.status}
-            onChange={(e) => update("status", e.target.value as typeof data.status)}
-            className={inputCls}
-            style={inputStyle}
-          >
-            <option value="draft">Borrador</option>
-            <option value="published">Publicado</option>
-          </select>
-        </Row>
         <Row label="Orden">
-          <input
-            type="number"
+          <NumberInput
             value={data.sortOrder}
-            onChange={(e) => update("sortOrder", Number(e.target.value))}
+            emptyValue={0}
+            onChange={(n) => update("sortOrder", n ?? 0)}
             className={`${inputCls} w-24`}
             style={inputStyle}
+            placeholder="0"
           />
         </Row>
       </fieldset>

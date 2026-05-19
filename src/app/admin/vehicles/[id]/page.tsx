@@ -15,26 +15,23 @@ export default async function EditVehiclePage({ params }: { params: Promise<{ id
   });
   if (!v) notFound();
 
-  // Hydrate the 3 locales from DB rows; fill missing with empty.
+  // Hydrate the 3 locales from DB rows; fill missing with empty strings so the
+  // admin can leave CA/EN blank and rely on the Spanish fallback.
   const tByLocale = Object.fromEntries(v.translations.map((t) => [t.locale, t]));
   const translations: VehicleFormInput["translations"] = (["es", "ca", "en"] as const).map((l) => ({
     locale: l,
     title: tByLocale[l]?.title ?? "",
     description: tByLocale[l]?.description ?? "",
-    metaTitle: tByLocale[l]?.metaTitle ?? "",
-    metaDescription: tByLocale[l]?.metaDescription ?? "",
   }));
 
   const initial: VehicleFormInput & { id: string } = {
     id: v.id,
-    slug: v.slug,
     type: v.type,
     basePricePerDay: Number(v.basePricePerDay),
     minRentalDays: v.minRentalDays,
     maxRentalDays: v.maxRentalDays,
     location: v.location,
     attributes: v.attributes,
-    status: v.status,
     featured: v.featured,
     sortOrder: v.sortOrder,
     translations,

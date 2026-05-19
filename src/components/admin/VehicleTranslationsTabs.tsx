@@ -7,8 +7,12 @@ type Tr = {
   locale: "es" | "ca" | "en";
   title: string;
   description: string;
-  metaTitle?: string;
-  metaDescription?: string;
+};
+
+const LOCALE_LABEL: Record<Tr["locale"], string> = {
+  es: "ES (obligatorio)",
+  ca: "CA (opcional)",
+  en: "EN (opcional)",
 };
 
 export function VehicleTranslationsTabs({
@@ -20,6 +24,7 @@ export function VehicleTranslationsTabs({
 }) {
   const [active, setActive] = useState<"es" | "ca" | "en">("es");
   const cur = translations.find((t) => t.locale === active)!;
+  const isRequired = active === "es";
 
   function update(patch: Partial<Tr>) {
     onChange(translations.map((t) => (t.locale === active ? { ...t, ...patch } : t)));
@@ -30,7 +35,7 @@ export function VehicleTranslationsTabs({
 
   return (
     <div>
-      <div className="mb-3 flex gap-2">
+      <div className="mb-3 flex flex-wrap gap-2">
         {(["es", "ca", "en"] as const).map((l) => (
           <button
             key={l}
@@ -43,26 +48,35 @@ export function VehicleTranslationsTabs({
                 : { background: "var(--bg-sunken)", color: "var(--fg-2)" }
             }
           >
-            {l.toUpperCase()}
+            {LOCALE_LABEL[l]}
           </button>
         ))}
       </div>
+      {!isRequired && (
+        <p className="mb-2 text-xs" style={{ color: "var(--fg-3)" }}>
+          Si lo dejas vacío, se usará la traducción en español como respaldo.
+        </p>
+      )}
       <div className="space-y-2">
         <input
-          placeholder="Título"
+          placeholder={isRequired ? "Título *" : "Título"}
           value={cur.title}
           onChange={(e) => update({ title: e.target.value })}
           className={inputCls}
           style={inputStyle}
+          required={isRequired}
         />
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <textarea
-            placeholder="Descripción (markdown)"
+            placeholder={
+              isRequired ? "Descripción (markdown) *" : "Descripción (markdown)"
+            }
             value={cur.description}
             rows={10}
             onChange={(e) => update({ description: e.target.value })}
             className={`${inputCls} font-mono`}
             style={inputStyle}
+            required={isRequired}
           />
           <div
             className="space-y-3 rounded-[var(--radius-sm)] border p-3 text-sm"
@@ -75,21 +89,6 @@ export function VehicleTranslationsTabs({
             <ReactMarkdown>{cur.description || "*Vista previa vacía*"}</ReactMarkdown>
           </div>
         </div>
-        <input
-          placeholder="Meta title (SEO, opcional)"
-          value={cur.metaTitle ?? ""}
-          onChange={(e) => update({ metaTitle: e.target.value })}
-          className={inputCls}
-          style={inputStyle}
-        />
-        <textarea
-          placeholder="Meta description (SEO, opcional)"
-          value={cur.metaDescription ?? ""}
-          onChange={(e) => update({ metaDescription: e.target.value })}
-          rows={2}
-          className={inputCls}
-          style={inputStyle}
-        />
       </div>
     </div>
   );
