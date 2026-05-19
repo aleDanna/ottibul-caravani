@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { submitInquiryAction, type InquiryState } from "@/app/actions/inquiries";
+import { COUNTRY_OPTIONS } from "@/lib/countries";
 
 const initial: InquiryState = {};
 
@@ -55,7 +56,28 @@ export function InquiryForm({
 
       <div>
         <label className="block text-sm font-medium">{t("phone")}</label>
-        <input name="phone" type="tel" required className={inputClass} style={inputStyle} />
+        <div className="mt-1 flex gap-2">
+          <select
+            name="phoneCountry"
+            defaultValue="ES"
+            aria-label="Country code"
+            className={`${inputClass} mt-0 flex-shrink-0`}
+            style={{ ...inputStyle, width: "auto" }}
+          >
+            {COUNTRY_OPTIONS.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.flag} {c.nativeName} ({c.dialCode})
+              </option>
+            ))}
+          </select>
+          <input
+            name="phone"
+            type="tel"
+            required
+            className={`${inputClass} mt-0 min-w-0 flex-1`}
+            style={inputStyle}
+          />
+        </div>
         {state.fieldErrors?.phone && (
           <p className="mt-1 text-xs" style={{ color: "var(--terra-700)" }}>{state.fieldErrors.phone}</p>
         )}
