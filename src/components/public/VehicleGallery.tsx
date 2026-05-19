@@ -232,7 +232,7 @@ function Lightbox({
           onClose();
         }}
         aria-label="Cerrar"
-        className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20"
+        className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20"
         style={{ background: "rgba(255, 255, 255, 0.12)" }}
       >
         <svg
@@ -259,7 +259,7 @@ function Lightbox({
               onPrev();
             }}
             aria-label="Anterior"
-            className="absolute left-3 flex h-12 w-12 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20 md:left-6"
+            className="absolute left-3 z-10 flex h-12 w-12 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20 md:left-6"
             style={{ background: "rgba(255, 255, 255, 0.12)" }}
           >
             <svg
@@ -282,7 +282,7 @@ function Lightbox({
               onNext();
             }}
             aria-label="Siguiente"
-            className="absolute right-3 flex h-12 w-12 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20 md:right-6"
+            className="absolute right-3 z-10 flex h-12 w-12 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20 md:right-6"
             style={{ background: "rgba(255, 255, 255, 0.12)" }}
           >
             <svg
