@@ -47,8 +47,15 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
-      <body className="flex min-h-screen flex-col bg-[var(--bg-page)] text-[var(--fg-1)]">
+    <html
+      lang={locale}
+      className={`${serif.variable} ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <body
+        className="flex min-h-screen flex-col bg-[var(--bg-page)] text-[var(--fg-1)]"
+        suppressHydrationWarning
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
