@@ -52,10 +52,14 @@ export function validateForPublish(input: VehicleFormInput): string[] {
     errors.push("La descripción en español es obligatoria (mínimo 10 caracteres)");
   }
 
-  if (input.images.length === 0) {
-    errors.push("Se requiere al menos una imagen");
-  } else if (!input.images.some((i) => i.isCover)) {
-    errors.push("Se requiere una imagen de portada");
+  // Local dev only: skip the image requirement so test vehicles can be created
+  // without uploads. Vercel builds (preview + prod) run with NODE_ENV=production.
+  if (process.env.NODE_ENV !== "development") {
+    if (input.images.length === 0) {
+      errors.push("Se requiere al menos una imagen");
+    } else if (!input.images.some((i) => i.isCover)) {
+      errors.push("Se requiere una imagen de portada");
+    }
   }
 
   const attrSchema = vehicleAttributesSchemas[input.type as VehicleType];
