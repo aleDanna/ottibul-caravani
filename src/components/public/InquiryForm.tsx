@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
@@ -18,6 +18,22 @@ export function InquiryForm({
 }) {
   const [state, action] = useActionState(submitInquiryAction, initial);
   const t = useTranslations("form");
+  const [minDate, setMinDate] = useState<string | undefined>(undefined);
+  const [checkInValue, setCheckInValue] = useState("");
+  useEffect(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    setMinDate(`${yyyy}-${mm}-${dd}`);
+  }, []);
+  const checkOutMin = checkInValue
+    ? (() => {
+        const [y, m, day] = checkInValue.split("-").map(Number);
+        return new Date(Date.UTC(y, m - 1, day + 1)).toISOString().slice(0, 10);
+      })()
+    : minDate;
   const inputClass =
     "mt-1 w-full rounded-[var(--radius-sm)] border p-2 text-sm";
   const inputStyle: React.CSSProperties = {
@@ -86,11 +102,22 @@ export function InquiryForm({
       <div className="grid grid-cols-2 gap-2">
         <div>
           <label className="block text-sm font-medium">{t("checkIn")}</label>
-          <input name="checkIn" type="date" required className={inputClass} style={inputStyle} />
+          <input
+            name="checkIn"
+            type="date"
+            required
+            min={minDate}
+            onChange={(e) => setCheckInValue(e.target.value)}
+            className={inputClass}
+            style={inputStyle}
+          />
+          {state.fieldErrors?.checkIn && (
+            <p className="mt-1 text-xs" style={{ color: "var(--terra-700)" }}>{state.fieldErrors.checkIn}</p>
+          )}
         </div>
         <div>
           <label className="block text-sm font-medium">{t("checkOut")}</label>
-          <input name="checkOut" type="date" required className={inputClass} style={inputStyle} />
+          <input name="checkOut" type="date" required min={checkOutMin} className={inputClass} style={inputStyle} />
           {state.fieldErrors?.checkOut && (
             <p className="mt-1 text-xs" style={{ color: "var(--terra-700)" }}>{state.fieldErrors.checkOut}</p>
           )}

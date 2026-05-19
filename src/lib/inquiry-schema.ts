@@ -2,6 +2,13 @@ import { z } from "zod";
 import { isValidPhoneNumber, parsePhoneNumberFromString } from "libphonenumber-js";
 import { SUPPORTED_COUNTRIES } from "@/lib/countries";
 
+function startOfTomorrowUtc() {
+  const d = new Date();
+  d.setUTCHours(0, 0, 0, 0);
+  d.setUTCDate(d.getUTCDate() + 1);
+  return d;
+}
+
 export const inquirySchema = z
   .object({
     vehicleId: z.string().uuid(),
@@ -16,6 +23,10 @@ export const inquirySchema = z
     message: z.string().max(2000).optional().or(z.literal("")),
     consent: z.union([z.literal("on"), z.literal(true), z.literal("true")]).transform(() => true),
     websiteUrl: z.string().max(0).optional().default(""), // honeypot
+  })
+  .refine((d) => d.checkIn >= startOfTomorrowUtc(), {
+    message: "checkIn must be tomorrow or later",
+    path: ["checkIn"],
   })
   .refine((d) => d.checkOut > d.checkIn, {
     message: "checkOut must be after checkIn",
