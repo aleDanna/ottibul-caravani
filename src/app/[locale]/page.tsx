@@ -7,6 +7,7 @@ import { HomeHero } from "@/components/public/HomeHero";
 import { HomeFeaturedFleet } from "@/components/public/HomeFeaturedFleet";
 import { HomeWhyUs } from "@/components/public/HomeWhyUs";
 import { HomeHowItWorks } from "@/components/public/HomeHowItWorks";
+import { HomePackSalida } from "@/components/public/HomePackSalida";
 import { HomeTestimonials } from "@/components/public/HomeTestimonials";
 import { HomeFinalCta } from "@/components/public/HomeFinalCta";
 import type { VehicleCardData } from "@/components/public/VehicleCard";
@@ -64,6 +65,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <HomeFeaturedFleet locale={locale as Locale} vehicles={fleetCards} />
       <HomeWhyUs />
       <HomeHowItWorks locale={locale as Locale} />
+      <HomePackSalida />
       <HomeTestimonials />
       <HomeFinalCta locale={locale as Locale} />
     </>
