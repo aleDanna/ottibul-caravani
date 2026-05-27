@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Container } from "@/components/public/Container";
+import { breadcrumbJsonLd, siteBaseUrl } from "@/lib/seo";
 import { UsefulLinkCard } from "@/components/public/UsefulLinkCard";
 
 export const dynamic = "force-static";
@@ -33,12 +34,22 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function UsefulLinksPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const breadcrumb = breadcrumbJsonLd([
+    { name: tNav("home"), url: `${siteBaseUrl()}/${locale}` },
+    { name: tNav("usefulLinks"), url: `${siteBaseUrl()}/${locale}/useful-links` },
+  ]);
   const t = await getTranslations({ locale, namespace: "usefulLinks" });
 
   const links = t.raw("links") as LinkEntry[];
 
   return (
-    <section className="py-12 md:py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <section className="py-12 md:py-16">
       <Container>
         <div className="max-w-3xl">
           <p
@@ -66,5 +77,6 @@ export default async function UsefulLinksPage({ params }: { params: Promise<{ lo
         </div>
       </Container>
     </section>
+    </>
   );
 }
