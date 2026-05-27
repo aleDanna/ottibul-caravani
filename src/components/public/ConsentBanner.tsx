@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
@@ -23,25 +23,41 @@ function setGtagConsent(value: ConsentValue) {
   });
 }
 
+function subscribeToStorage(cb: () => void) {
+  window.addEventListener("storage", cb);
+  return () => window.removeEventListener("storage", cb);
+}
+
+function getConsentSnapshot() {
+  return localStorage.getItem(STORAGE_KEY);
+}
+
+function getConsentServerSnapshot() {
+  return null;
+}
+
 export function ConsentBanner({ locale }: { locale: Locale }) {
   const t = useTranslations("cookieConsent");
-  const [visible, setVisible] = useState(false);
+  const stored = useSyncExternalStore(
+    subscribeToStorage,
+    getConsentSnapshot,
+    getConsentServerSnapshot,
+  );
 
+  // Replay granted consent on mount/hydration (e.g. returning visitor)
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === null) {
-      setVisible(true);
-    } else if (stored === "granted") {
+    if (stored === "granted") {
       setGtagConsent("granted");
     }
-  }, []);
+  }, [stored]);
+
+  const visible = stored === null;
 
   if (!visible) return null;
 
   const decide = (value: ConsentValue) => {
     localStorage.setItem(STORAGE_KEY, value);
     setGtagConsent(value);
-    setVisible(false);
   };
 
   return (
