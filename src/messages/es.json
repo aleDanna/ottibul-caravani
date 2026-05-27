@@ -251,5 +251,12 @@
     "title": "Preguntas Frecuentes",
     "subtitle": "Encuentra respuestas a las dudas más comunes sobre nuestro servicio de alquiler",
     "empty": "No hay preguntas publicadas todavía."
+  },
+  "cookieConsent": {
+    "title": "Utilizamos cookies",
+    "body": "Usamos cookies de análisis (Google Analytics) para entender cómo se navega el sitio y mejorarlo. Solo se cargan si las aceptas.",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "privacyLink": "Política de cookies"
   }
 }

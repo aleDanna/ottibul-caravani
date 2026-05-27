@@ -251,5 +251,12 @@
     "title": "Frequently Asked Questions",
     "subtitle": "Find answers to the most common questions about our rental service",
     "empty": "No questions have been published yet."
+  },
+  "cookieConsent": {
+    "title": "We use cookies",
+    "body": "We use analytics cookies (Google Analytics) to understand how the site is used and improve it. They only load if you accept.",
+    "accept": "Accept",
+    "reject": "Reject",
+    "privacyLink": "Cookie policy"
   }
 }

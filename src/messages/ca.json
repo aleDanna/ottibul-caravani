@@ -251,5 +251,12 @@
     "title": "Preguntes Freqüents",
     "subtitle": "Troba respostes als dubtes més comuns sobre el nostre servei de lloguer",
     "empty": "Encara no hi ha preguntes publicades."
+  },
+  "cookieConsent": {
+    "title": "Utilitzem cookies",
+    "body": "Utilitzem cookies d'anàlisi (Google Analytics) per entendre com es navega el lloc i millorar-lo. Només es carreguen si les acceptes.",
+    "accept": "Acceptar",
+    "reject": "Rebutjar",
+    "privacyLink": "Política de galetes"
   }
 }
