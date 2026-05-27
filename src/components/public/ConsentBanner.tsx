@@ -12,15 +12,12 @@ type ConsentValue = "granted" | "denied";
 function setGtagConsent(value: ConsentValue) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
-  function gtag(...args: unknown[]) {
-    window.dataLayer.push(args);
-  }
-  gtag("consent", "update", {
+  window.dataLayer.push(["consent", "update", {
     analytics_storage: value,
     ad_storage: "denied",
     ad_user_data: "denied",
     ad_personalization: "denied",
-  });
+  }]);
 }
 
 function subscribeToStorage(cb: () => void) {
@@ -58,6 +55,9 @@ export function ConsentBanner({ locale }: { locale: Locale }) {
   const decide = (value: ConsentValue) => {
     localStorage.setItem(STORAGE_KEY, value);
     setGtagConsent(value);
+    // The storage event only fires in OTHER browsing contexts; dispatch a synthetic
+    // one so useSyncExternalStore subscribers are notified in the same tab.
+    window.dispatchEvent(new StorageEvent("storage", { key: STORAGE_KEY, newValue: value }));
   };
 
   return (
