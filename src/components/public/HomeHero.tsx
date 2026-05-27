@@ -126,6 +126,7 @@ export function HomeHero({
                           alt={photo.altText ?? ""}
                           fill
                           priority={i === 0}
+                          fetchPriority={i === 0 ? "high" : "auto"}
                           sizes="(min-width: 768px) 40vw, 0px"
                           className="object-cover"
                         />
