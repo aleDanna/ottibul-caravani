@@ -11,6 +11,7 @@ import { Container } from "@/components/public/Container";
 import { VehicleGallery } from "@/components/public/VehicleGallery";
 import { VehicleAttributeTable } from "@/components/public/VehicleAttributeTable";
 import { VehicleInquirySidebar } from "@/components/public/VehicleInquirySidebar";
+import { breadcrumbJsonLd, siteBaseUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -41,7 +42,7 @@ export async function generateMetadata({
   if (!tr) return {};
 
   const cover = v.images.find((i) => i.isCover) ?? v.images[0];
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const base = siteBaseUrl();
 
   const description =
     tr.metaDescription ?? tr.description.replace(/[#*_`>\[\]\(\)]/g, "").slice(0, 160);
@@ -97,7 +98,7 @@ export default async function VehiclePage({
   const t = await getTranslations({ locale, namespace: "vehicle" });
   const cover = v.images.find((i) => i.isCover) ?? v.images[0];
 
-  const jsonLd = {
+  const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: tr.title,
@@ -109,15 +110,26 @@ export default async function VehiclePage({
       price: v.basePricePerDay,
       priceCurrency: "EUR",
       availability: "https://schema.org/InStock",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/${locale}/vehicles/${slug}`,
+      url: `${siteBaseUrl()}/${locale}/vehicles/${slug}`,
     },
   };
+
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const breadcrumb = breadcrumbJsonLd([
+    { name: tNav("home"), url: `${siteBaseUrl()}/${locale}` },
+    { name: tNav("catalog"), url: `${siteBaseUrl()}/${locale}/catalog` },
+    { name: tr.title, url: `${siteBaseUrl()}/${locale}/vehicles/${slug}` },
+  ]);
 
   return (
     <article className="py-10 md:py-14">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
       <Container>
         <header className="mb-8">
