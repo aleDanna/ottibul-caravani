@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Container } from "@/components/public/Container";
+import { breadcrumbJsonLd, siteBaseUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -45,6 +46,11 @@ function CheckIcon() {
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const breadcrumb = breadcrumbJsonLd([
+    { name: tNav("home"), url: `${siteBaseUrl()}/${locale}` },
+    { name: tNav("about"), url: `${siteBaseUrl()}/${locale}/about` },
+  ]);
   const t = await getTranslations({ locale, namespace: "about" });
 
   const story = t.raw("story") as string[];
@@ -52,7 +58,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const whyBullets = t.raw("whyBullets") as string[];
 
   return (
-    <section className="py-12 md:py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <section className="py-12 md:py-16">
       <Container>
         <div className="max-w-3xl">
           <p
@@ -108,5 +119,6 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </Container>
     </section>
+    </>
   );
 }
