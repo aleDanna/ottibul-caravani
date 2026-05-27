@@ -8,6 +8,7 @@ import { Container } from "@/components/public/Container";
 import { SectionHeading } from "@/components/public/SectionHeading";
 import { CatalogGrid } from "@/components/public/CatalogGrid";
 import { CatalogFilters } from "@/components/public/CatalogFilters";
+import { breadcrumbJsonLd, itemListJsonLd, siteBaseUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -60,6 +61,23 @@ export default async function CatalogPage({
   });
 
   const t = await getTranslations({ locale, namespace: "catalog" });
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+
+  const breadcrumb = breadcrumbJsonLd([
+    { name: tNav("home"), url: `${siteBaseUrl()}/${locale}` },
+    { name: tNav("catalog"), url: `${siteBaseUrl()}/${locale}/catalog` },
+  ]);
+  const itemList = itemListJsonLd(
+    list.map((v) => {
+      const tr = v.translations.find((t) => t.locale === locale) ?? v.translations[0];
+      const cover = v.images.find((i) => i.isCover) ?? v.images[0];
+      return {
+        name: tr?.title ?? v.slug,
+        url: `${siteBaseUrl()}/${locale}/vehicles/${v.slug}`,
+        image: cover?.url,
+      };
+    }),
+  );
 
   const cards = list.map((v) => ({
     id: v.id,
@@ -77,7 +95,10 @@ export default async function CatalogPage({
   }));
 
   return (
-    <section className="py-12 md:py-16">
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
+      <section className="py-12 md:py-16">
       <Container>
         <SectionHeading
           eyebrow={t("metaTitle")}
@@ -89,5 +110,6 @@ export default async function CatalogPage({
         <CatalogGrid vehicles={cards} locale={locale as Locale} />
       </Container>
     </section>
+    </>
   );
 }
