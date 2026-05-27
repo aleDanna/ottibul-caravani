@@ -4,9 +4,12 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { Instrument_Serif, Manrope, JetBrains_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { routing, type Locale } from "@/i18n/routing";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
+import { ConsentBanner } from "@/components/public/ConsentBanner";
+import { GoogleAnalytics } from "@/components/public/GoogleAnalytics";
 import { organizationJsonLd, siteBaseUrl } from "@/lib/seo";
 import "../globals.css";
 
@@ -91,6 +94,9 @@ export default async function LocaleLayout({
           <Header locale={locale as Locale} />
           <main className="flex-1">{children}</main>
           <Footer locale={locale as Locale} />
+          <ConsentBanner locale={locale as Locale} />
+          <GoogleAnalytics />
+          <SpeedInsights />
         </NextIntlClientProvider>
       </body>
     </html>
