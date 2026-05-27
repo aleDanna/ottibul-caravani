@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 
 const ORIGINAL_ENV = { ...process.env };
 beforeEach(() => {
+  vi.resetModules();
   process.env = { ...ORIGINAL_ENV, NEXT_PUBLIC_SITE_URL: "https://ottibull.com" };
 });
 
@@ -13,7 +14,6 @@ describe("seo helpers", () => {
 
   it("siteBaseUrl falls back to localhost:3000 when env missing", async () => {
     delete process.env.NEXT_PUBLIC_SITE_URL;
-    vi.resetModules();
     const { siteBaseUrl } = await import("@/lib/seo");
     expect(siteBaseUrl()).toBe("http://localhost:3000");
   });

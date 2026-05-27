@@ -5,19 +5,18 @@ export function siteBaseUrl(): string {
   return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 }
 
-const BASE = siteBaseUrl();
-
 function pathWithoutLocale(path: string): string {
   return path.replace(/^\/[a-z]{2}(?=\/|$)/, "");
 }
 
 export function localeAlternates(currentLocalePath: string): Metadata["alternates"] {
+  const base = siteBaseUrl();
   const tail = pathWithoutLocale(currentLocalePath);
   return {
-    canonical: `${BASE}${currentLocalePath}`,
+    canonical: `${base}${currentLocalePath}`,
     languages: {
-      ...Object.fromEntries(routing.locales.map((l) => [l, `${BASE}/${l}${tail}`])),
-      "x-default": `${BASE}/${routing.defaultLocale}${tail}`,
+      ...Object.fromEntries(routing.locales.map((l) => [l, `${base}/${l}${tail}`])),
+      "x-default": `${base}/${routing.defaultLocale}${tail}`,
     },
   };
 }
