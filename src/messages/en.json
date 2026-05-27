@@ -164,7 +164,9 @@
     "fromPrice": "from {price} €/day",
     "minDays": "Minimum {days} days",
     "location": "Location",
-    "requestQuote": "Request a quote"
+    "requestQuote": "Request a quote",
+    "similarTitle": "Similar vehicles",
+    "similarSubtitle": "Other options you might like"
   },
   "form": {
     "name": "Full name",

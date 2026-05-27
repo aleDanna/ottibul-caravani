@@ -164,7 +164,9 @@
     "fromPrice": "des de {price} €/dia",
     "minDays": "Mínim {days} dies",
     "location": "Ubicació",
-    "requestQuote": "Sol·licitar pressupost"
+    "requestQuote": "Sol·licitar pressupost",
+    "similarTitle": "Vehicles similars",
+    "similarSubtitle": "Altres opcions que et podrien interessar"
   },
   "form": {
     "name": "Nom complet",
