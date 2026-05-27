@@ -78,6 +78,53 @@
         "body": "Reculls el vehicle, t'expliquem tot el necessari i comença la teva aventura."
       }
     ],
+    "packSalidaTitle": "Pack sortida?",
+    "packSalidaSubtitle": "Al pack sortida s'inclou:",
+    "packSalidaItems": [
+      {
+        "tone": "bosco",
+        "icon": "parking",
+        "title": "Pàrquing Gratuït",
+        "body": "Deixar el seu cotxe a les nostres instal·lacions si ho necessita és molt pràctic."
+      },
+      {
+        "tone": "cielo",
+        "icon": "bed",
+        "title": "Roba de Llit",
+        "body": "Coixins, llençols i nòrdics."
+      },
+      {
+        "tone": "sole",
+        "icon": "utensils",
+        "title": "Parament i Vaixella",
+        "body": "Tot el necessari per cuinar i menjar (cafetera, olles, paelles, plats, gots…)."
+      },
+      {
+        "tone": "terra",
+        "icon": "table",
+        "title": "Mobiliari Exterior",
+        "body": "Taula tipus càmping amb cadires."
+      },
+      {
+        "tone": "sole",
+        "icon": "propane",
+        "title": "Consumibles",
+        "body": "Bombones de butà i pastilles químiques."
+      },
+      {
+        "tone": "cielo",
+        "icon": "clock",
+        "title": "Horaris Flexibles",
+        "body": "Possibilitat de lliurament la nit anterior a la sortida i flexibilitat en l'hora d'arribada."
+      },
+      {
+        "tone": "bosco",
+        "icon": "spray",
+        "title": "Neteja",
+        "body": "Interior del vehicle."
+      }
+    ],
+    "packSalidaFooter": "És obligatori i es paga per viatge, no per dia.",
     "testimonialsEyebrow": "El que diuen de nosaltres",
     "testimonialsTitle": "Aventures reals, viatgers feliços",
     "testimonialsSubtitle": "La confiança dels nostres clients és el nostre millor aval",

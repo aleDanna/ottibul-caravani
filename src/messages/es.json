@@ -78,6 +78,53 @@
         "body": "Recoges el vehículo, te explicamos todo lo necesario y empieza tu aventura."
       }
     ],
+    "packSalidaTitle": "¿Pack salida?",
+    "packSalidaSubtitle": "En el pack salida se incluye:",
+    "packSalidaItems": [
+      {
+        "tone": "bosco",
+        "icon": "parking",
+        "title": "Parking Gratuito",
+        "body": "Dejar su coche en nuestras instalaciones si lo necesita es muy práctico."
+      },
+      {
+        "tone": "cielo",
+        "icon": "bed",
+        "title": "Ropa de Cama",
+        "body": "Almohadas, sábanas y nórdicos."
+      },
+      {
+        "tone": "sole",
+        "icon": "utensils",
+        "title": "Menaje y Vajilla",
+        "body": "Todo lo necesario para cocinar y comer (cafetera, ollas, sartenes, platos, vasos…)."
+      },
+      {
+        "tone": "terra",
+        "icon": "table",
+        "title": "Mobiliario Exterior",
+        "body": "Mesa tipo camping con sillas."
+      },
+      {
+        "tone": "sole",
+        "icon": "propane",
+        "title": "Consumibles",
+        "body": "Bombonas de butano y pastillas químicas."
+      },
+      {
+        "tone": "cielo",
+        "icon": "clock",
+        "title": "Horarios Flexibles",
+        "body": "Posibilidad de entrega la noche anterior a la salida y flexibilidad en la hora de llegada."
+      },
+      {
+        "tone": "bosco",
+        "icon": "spray",
+        "title": "Limpieza",
+        "body": "Interior del vehículo."
+      }
+    ],
+    "packSalidaFooter": "Es obligatorio y se abona por viaje, no por día.",
     "testimonialsEyebrow": "Lo que dicen de nosotros",
     "testimonialsTitle": "Aventuras reales, viajeros felices",
     "testimonialsSubtitle": "La confianza de nuestros clientes es nuestro mejor aval",

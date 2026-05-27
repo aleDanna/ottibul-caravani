@@ -78,6 +78,53 @@
         "body": "Pick up the vehicle, we walk you through everything you need, and your adventure begins."
       }
     ],
+    "packSalidaTitle": "What's in the departure pack?",
+    "packSalidaSubtitle": "Everything included in the departure pack:",
+    "packSalidaItems": [
+      {
+        "tone": "bosco",
+        "icon": "parking",
+        "title": "Free Parking",
+        "body": "Leave your car at our premises if you need to — very handy."
+      },
+      {
+        "tone": "cielo",
+        "icon": "bed",
+        "title": "Bedding",
+        "body": "Pillows, sheets and duvets."
+      },
+      {
+        "tone": "sole",
+        "icon": "utensils",
+        "title": "Kitchenware & Tableware",
+        "body": "Everything you need to cook and eat (coffee maker, pots, pans, plates, glasses…)."
+      },
+      {
+        "tone": "terra",
+        "icon": "table",
+        "title": "Outdoor Furniture",
+        "body": "Camping-style table with chairs."
+      },
+      {
+        "tone": "sole",
+        "icon": "propane",
+        "title": "Consumables",
+        "body": "Butane gas cylinders and chemical tablets."
+      },
+      {
+        "tone": "cielo",
+        "icon": "clock",
+        "title": "Flexible Hours",
+        "body": "Option to pick up the night before departure and flexible arrival time."
+      },
+      {
+        "tone": "bosco",
+        "icon": "spray",
+        "title": "Cleaning",
+        "body": "Interior of the vehicle."
+      }
+    ],
+    "packSalidaFooter": "Mandatory — charged per trip, not per day.",
     "testimonialsEyebrow": "What people say",
     "testimonialsTitle": "Real adventures, happy travellers",
     "testimonialsSubtitle": "Our customers' trust is our best endorsement",
