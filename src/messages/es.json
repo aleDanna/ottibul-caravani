@@ -12,11 +12,11 @@
     "faq": "FAQ"
   },
   "home": {
-    "metaTitle": "Otti Bull · Alquiler de Autocaravanas en Barcelona",
-    "metaDescription": "Alquila autocaravanas y motos premium en Barcelona. Reserva fácil, atención personalizada.",
-    "heroEyebrow": "Libertad sobre Ruedas",
+    "metaTitle": "Alquiler de autocaravanas en Barcelona · Otti Bull",
+    "metaDescription": "Alquiler de autocaravanas premium en Barcelona. Vehículos equipados, seguro a todo riesgo y atención personalizada. Reserva online.",
+    "heroEyebrow": "Libertad sobre ruedas",
     "heroTitle": "Tu próxima aventura empieza aquí",
-    "heroSubtitle": "Alquiler de autocaravanas premium en Barcelona",
+    "heroSubtitle": "Alquiler de autocaravanas premium en Barcelona y Cataluña",
     "heroPrimaryCta": "Buscar vehículos",
     "heroSecondaryCta": "Cómo funciona",
     "ctaCatalog": "Ver catálogo",
@@ -30,7 +30,7 @@
     "featuredSubtitle": "Descubre todos nuestros vehículos totalmente equipados y listos para tu próxima aventura",
     "featuredEmpty": "Aún no hay vehículos disponibles.",
     "whyTitle": "Lo que nos hace diferentes",
-    "whySubtitle": "Por qué cientos de viajeros confían en Otti Bull para sus aventuras",
+    "whySubtitle": "Por qué cientos de viajeros eligen Otti Bull para alquilar su autocaravana en Barcelona",
     "why": [
       {
         "tone": "bosco",
@@ -148,9 +148,9 @@
     "finalCtaButton": "Ver flota"
   },
   "catalog": {
-    "metaTitle": "Catálogo de Vehículos | Otti Bull",
-    "metaDescription": "Explora nuestra flota de autocaravanas, motos y más en alquiler en Barcelona.",
-    "title": "Nuestra flota",
+    "metaTitle": "Flota de autocaravanas en Barcelona · Otti Bull",
+    "metaDescription": "Explora la flota completa de autocaravanas en alquiler en Barcelona y Cataluña: camper, motos y vehículos equipados para tu viaje.",
+    "title": "Flota de autocaravanas en alquiler",
     "filterAll": "Todos",
     "filterCamper": "Autocaravanas",
     "filterMotorcycle": "Motos",
@@ -199,10 +199,10 @@
     "groupCompany": "Empresa"
   },
   "about": {
-    "metaTitle": "Nosotros | Otti Bull",
-    "metaDescription": "Otti Bull SL — expertos en alquiler de autocaravanas en Barcelona.",
+    "metaTitle": "Otti Bull SL · Alquiler de autocaravanas en Barcelona",
+    "metaDescription": "Otti Bull SL: empresa especializada en alquiler de autocaravanas premium en Barcelona. Vehículos propios, atención personalizada y servicio local.",
     "heroEyebrow": "Otti Bull SL",
-    "heroTitle": "Expertos en Caravaning desde Barcelona",
+    "heroTitle": "Expertos en alquiler de autocaravanas en Barcelona",
     "story": [
       "En Otti Bull Caravaning, somos apasionados por la libertad de viajar y descubrir nuevos horizontes. Desde nuestra base en Barcelona, ofrecemos un servicio de alquiler de autocaravanas premium diseñado para hacer de tu aventura una experiencia inolvidable.",
       "Nuestro compromiso es proporcionarte vehículos en perfecto estado, totalmente equipados y con el mejor servicio de atención al cliente. Cada autocaravana de nuestra flota es cuidadosamente mantenida y preparada para garantizar tu seguridad y comodidad en cada kilómetro.",
@@ -246,10 +246,10 @@
     ]
   },
   "faq": {
-    "metaTitle": "Preguntas Frecuentes | Otti Bull",
-    "metaDescription": "Respuestas a las dudas más comunes sobre el alquiler de autocaravanas en Otti Bull.",
-    "title": "Preguntas Frecuentes",
-    "subtitle": "Encuentra respuestas a las dudas más comunes sobre nuestro servicio de alquiler",
+    "metaTitle": "Preguntas frecuentes sobre alquiler de autocaravanas · Otti Bull",
+    "metaDescription": "Respuestas a las preguntas más frecuentes sobre alquiler de autocaravanas en Barcelona: precios, seguros, documentación y entrega.",
+    "title": "Preguntas frecuentes",
+    "subtitle": "Todo lo que necesitas saber antes de alquilar una autocaravana en Barcelona",
     "empty": "No hay preguntas publicadas todavía."
   },
   "cookieConsent": {
