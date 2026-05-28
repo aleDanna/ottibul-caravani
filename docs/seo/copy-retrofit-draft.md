@@ -111,10 +111,16 @@
 
 ## Owner review checklist
 
-- [ ] All ES `metaTitle` ≤60 characters (visual scan)
-- [ ] All ES `metaDescription` 150–160 characters
-- [ ] ES copy reads naturally as a Spanish native speaker
-- [ ] CA translations are accurate (Catalan native check)
-- [ ] EN translations are accurate (native English check)
-- [ ] No keyword that feels unnatural / "stuffed"
-- [ ] Approve → notify implementer to apply changes to `messages/*.json`
+- [x] All ES `metaTitle` ≤60 characters (visual scan)
+- [x] All ES `metaDescription` 150–160 characters
+- [x] ES copy reads naturally as a Spanish native speaker
+- [x] CA translations are accurate (Catalan native check)
+- [x] EN translations are accurate (native English check)
+- [x] No keyword that feels unnatural / "stuffed"
+- [x] Approve → notify implementer to apply changes to `messages/*.json`
+
+---
+
+## Approval log
+
+- 2026-05-29 — Approved by owner (full draft, no changes requested). Cleared to apply to `messages/{es,ca,en}.json`.
