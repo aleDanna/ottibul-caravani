@@ -14,6 +14,11 @@ const stackPositions: { inset: string; rotate: string }[] = [
   { inset: "55% 50% 0 5%", rotate: "rotate(-1deg)" },
 ];
 
+// The largest stacked tile (index 1, ~70%×70% of the collage) is the browser's
+// LCP candidate on the home page, so it gets the priority/eager hints — not the
+// source-order-first tile.
+const LCP_STACK_INDEX = 1;
+
 const gradientBackgrounds = [
   "linear-gradient(135deg, var(--cielo-100), var(--sole-100), var(--crema-100))",
   "linear-gradient(135deg, var(--bosco-100), var(--bosco-50), var(--crema-100))",
@@ -125,7 +130,8 @@ export function HomeHero({
                           src={photo.url}
                           alt={photo.altText ?? ""}
                           fill
-                          priority={i === 0}
+                          priority={i === LCP_STACK_INDEX}
+                          fetchPriority={i === LCP_STACK_INDEX ? "high" : "auto"}
                           sizes="(min-width: 768px) 40vw, 0px"
                           className="object-cover"
                         />

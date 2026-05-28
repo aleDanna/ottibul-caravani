@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { eq, and } from "drizzle-orm";
+import { eq, and, ne, desc } from "drizzle-orm";
 import ReactMarkdown from "react-markdown";
 import { db } from "@/db/client";
 import { vehicles } from "@/db/schema";
@@ -11,6 +11,9 @@ import { Container } from "@/components/public/Container";
 import { VehicleGallery } from "@/components/public/VehicleGallery";
 import { VehicleAttributeTable } from "@/components/public/VehicleAttributeTable";
 import { VehicleInquirySidebar } from "@/components/public/VehicleInquirySidebar";
+import { breadcrumbJsonLd, siteBaseUrl } from "@/lib/seo";
+import { VehicleSimilar } from "@/components/public/VehicleSimilar";
+import type { VehicleCardData } from "@/components/public/VehicleCard";
 
 export const dynamic = "force-static";
 
@@ -41,7 +44,7 @@ export async function generateMetadata({
   if (!tr) return {};
 
   const cover = v.images.find((i) => i.isCover) ?? v.images[0];
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const base = siteBaseUrl();
 
   const description =
     tr.metaDescription ?? tr.description.replace(/[#*_`>\[\]\(\)]/g, "").slice(0, 160);
@@ -94,10 +97,36 @@ export default async function VehiclePage({
     v.translations[0];
   if (!tr) notFound();
 
+  const similarRows = await db.query.vehicles.findMany({
+    where: and(
+      eq(vehicles.status, "published"),
+      eq(vehicles.type, v.type),
+      ne(vehicles.id, v.id),
+    ),
+    with: { translations: true, images: true },
+    orderBy: [desc(vehicles.sortOrder), desc(vehicles.createdAt)],
+    limit: 3,
+  });
+
+  const similar: VehicleCardData[] = similarRows.map((row) => ({
+    id: row.id,
+    slug: row.slug,
+    type: row.type,
+    basePricePerDay: row.basePricePerDay,
+    location: row.location,
+    attributes: (row.attributes ?? {}) as Record<string, unknown>,
+    translations: row.translations.map((t) => ({ locale: t.locale, title: t.title })),
+    images: row.images.map((img) => ({
+      url: img.url,
+      altText: img.altText,
+      isCover: img.isCover,
+    })),
+  }));
+
   const t = await getTranslations({ locale, namespace: "vehicle" });
   const cover = v.images.find((i) => i.isCover) ?? v.images[0];
 
-  const jsonLd = {
+  const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: tr.title,
@@ -109,15 +138,26 @@ export default async function VehiclePage({
       price: v.basePricePerDay,
       priceCurrency: "EUR",
       availability: "https://schema.org/InStock",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/${locale}/vehicles/${slug}`,
+      url: `${siteBaseUrl()}/${locale}/vehicles/${slug}`,
     },
   };
+
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const breadcrumb = breadcrumbJsonLd([
+    { name: tNav("home"), url: `${siteBaseUrl()}/${locale}` },
+    { name: tNav("catalog"), url: `${siteBaseUrl()}/${locale}/catalog` },
+    { name: tr.title, url: `${siteBaseUrl()}/${locale}/vehicles/${slug}` },
+  ]);
 
   return (
     <article className="py-10 md:py-14">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
       <Container>
         <header className="mb-8">
@@ -153,6 +193,7 @@ export default async function VehiclePage({
           </aside>
         </div>
       </Container>
+      <VehicleSimilar locale={locale as Locale} vehicles={similar} />
     </article>
   );
 }

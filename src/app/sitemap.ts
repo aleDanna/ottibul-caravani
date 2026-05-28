@@ -32,15 +32,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .where(eq(faqs.status, "published"));
   const faqLastMod = faqMaxRow?.value ?? undefined;
 
+  const vehicleMax = published.reduce<Date | undefined>(
+    (acc, v) => (v.updatedAt && (!acc || v.updatedAt > acc) ? v.updatedAt : acc),
+    undefined,
+  );
+
+  const candidates: Date[] = [];
+  if (faqLastMod) candidates.push(faqLastMod);
+  if (vehicleMax) candidates.push(vehicleMax);
+  const homeLastMod = candidates.length
+    ? candidates.reduce((acc, d) => (d > acc ? d : acc))
+    : undefined;
+
   const entries: MetadataRoute.Sitemap = [];
 
   for (const { path, changeFreq, priority } of STATIC_PATHS) {
     for (const locale of routing.locales) {
+      const isDefaultLocale = locale === routing.defaultLocale;
+      const effectivePriority =
+        path === "" ? (isDefaultLocale ? 1.0 : 0.9) : priority;
+      const effectiveLastMod =
+        path === "" ? homeLastMod :
+        path === "/faq" ? faqLastMod :
+        undefined;
       entries.push({
         url: `${BASE}/${locale}${path}`,
         changeFrequency: changeFreq,
-        priority,
-        lastModified: path === "/faq" && faqLastMod ? faqLastMod : undefined,
+        priority: effectivePriority,
+        lastModified: effectiveLastMod,
         alternates: { languages: localeAlternates(path) },
       });
     }

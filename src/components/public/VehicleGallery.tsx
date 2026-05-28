@@ -85,6 +85,7 @@ export function VehicleGallery({ images, alt }: { images: Img[]; alt: string }) 
             alt={main.altText ?? alt}
             fill
             priority
+            fetchPriority="high"
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           />
@@ -139,6 +140,7 @@ export function VehicleGallery({ images, alt }: { images: Img[]; alt: string }) 
             alt={main.altText ?? alt}
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover"
           />
