@@ -12,11 +12,11 @@
     "faq": "FAQ"
   },
   "home": {
-    "metaTitle": "Otti Bull · Camper Rentals in Barcelona",
-    "metaDescription": "Rent premium campers and motorcycles in Barcelona. Easy booking, personalized service.",
+    "metaTitle": "Camper rentals in Barcelona · Otti Bull",
+    "metaDescription": "Premium camper rentals in Barcelona. Fully equipped vehicles, comprehensive insurance and personalized service. Book online.",
     "heroEyebrow": "Freedom on Wheels",
     "heroTitle": "Your next adventure starts here",
-    "heroSubtitle": "Premium camper rentals in Barcelona",
+    "heroSubtitle": "Premium camper rentals in Barcelona and Catalonia",
     "heroPrimaryCta": "Browse vehicles",
     "heroSecondaryCta": "How it works",
     "ctaCatalog": "View catalog",
@@ -30,7 +30,7 @@
     "featuredSubtitle": "Discover all our fully equipped vehicles, ready for your next adventure",
     "featuredEmpty": "No vehicles available yet.",
     "whyTitle": "What makes us different",
-    "whySubtitle": "Why hundreds of travellers trust Otti Bull for their adventures",
+    "whySubtitle": "Why hundreds of travellers choose Otti Bull to rent their camper in Barcelona",
     "why": [
       {
         "tone": "bosco",
@@ -148,9 +148,9 @@
     "finalCtaButton": "Browse fleet"
   },
   "catalog": {
-    "metaTitle": "Vehicle Catalog | Otti Bull",
-    "metaDescription": "Explore our fleet of campers, motorcycles and more for rent in Barcelona.",
-    "title": "Our fleet",
+    "metaTitle": "Camper fleet in Barcelona · Otti Bull",
+    "metaDescription": "Explore our full camper fleet for rent in Barcelona and Catalonia: campervans, motorcycles and fully equipped vehicles for your trip.",
+    "title": "Our camper fleet for rent",
     "filterAll": "All",
     "filterCamper": "Campers",
     "filterMotorcycle": "Motorcycles",
@@ -199,10 +199,10 @@
     "groupCompany": "Company"
   },
   "about": {
-    "metaTitle": "About | Otti Bull",
-    "metaDescription": "Otti Bull SL — premium camper rental experts in Barcelona.",
+    "metaTitle": "Otti Bull SL · Camper rentals in Barcelona",
+    "metaDescription": "Otti Bull SL: specialists in premium camper rentals in Barcelona. Owned fleet, personalized service and local know-how.",
     "heroEyebrow": "Otti Bull SL",
-    "heroTitle": "Caravaning Experts from Barcelona",
+    "heroTitle": "Camper rental experts in Barcelona",
     "story": [
       "At Otti Bull Caravaning, we are passionate about the freedom to travel and discover new horizons. From our base in Barcelona, we offer a premium camper rental service designed to make your adventure an unforgettable experience.",
       "Our commitment is to provide you with vehicles in perfect condition, fully equipped and backed by the best customer service. Every camper in our fleet is carefully maintained and prepared to guarantee your safety and comfort on every kilometre.",
@@ -246,10 +246,10 @@
     ]
   },
   "faq": {
-    "metaTitle": "Frequently Asked Questions | Otti Bull",
-    "metaDescription": "Answers to the most common questions about renting a camper with Otti Bull.",
+    "metaTitle": "FAQ — Camper rentals · Otti Bull",
+    "metaDescription": "Answers to the most common questions about camper rentals in Barcelona: pricing, insurance, documents and delivery.",
     "title": "Frequently Asked Questions",
-    "subtitle": "Find answers to the most common questions about our rental service",
+    "subtitle": "Everything you need to know before renting a camper in Barcelona",
     "empty": "No questions have been published yet."
   },
   "cookieConsent": {
