@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
-  <g transform="translate(6, 12)">
-    <circle cx="28" cy="30" r="13" fill="#F2B441"></circle>
-    <path d="M2 50 H54" stroke="#FBF8F1" stroke-width="3" stroke-linecap="round"></path>
-    <path d="M10 56 H46" stroke="#FBF8F1" stroke-width="3" stroke-linecap="round" opacity="0.55"></path>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 230" fill="none">
+  <!-- otti wordmark (light, for dark backgrounds) -->
+  <g fill="#FBF8F1" stroke="#FBF8F1">
+    <!-- o : thick ring + base block -->
+    <circle cx="66" cy="112" r="46" fill="none" stroke-width="34"></circle>
+    <rect x="34" y="185" width="64" height="26" rx="7" stroke="none"></rect>
+
+    <!-- first t -->
+    <path d="M176 52 L176 150 Q176 172 198 172" fill="none" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M146 84 L212 84" fill="none" stroke-width="24" stroke-linecap="round"></path>
+
+    <!-- second t -->
+    <path d="M262 52 L262 150 Q262 172 284 172" fill="none" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M232 84 L298 84" fill="none" stroke-width="24" stroke-linecap="round"></path>
+
+    <!-- i -->
+    <rect x="324" y="55" width="28" height="27" rx="8" stroke="none"></rect>
+    <path d="M338 100 L338 150 Q338 172 360 172" fill="none" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
   </g>
-  <text x="74" y="48" font-family="Instrument Serif, Georgia, serif" font-size="36" font-weight="400" fill="#FBF8F1" letter-spacing="-0.4">Ottibull</text>
-  <text x="75" y="65" font-family="Manrope, sans-serif" font-size="9" font-weight="600" fill="#A6C2A8" letter-spacing="3.2">CARAVANING</text>
 </svg>

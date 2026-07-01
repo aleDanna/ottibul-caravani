@@ -1,6 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
-  <circle cx="40" cy="40" r="40" fill="#355C44"></circle>
-  <circle cx="40" cy="38" r="13" fill="#F2B441"></circle>
-  <path d="M14 56 H66" stroke="#FBF8F1" stroke-width="3" stroke-linecap="round"></path>
-  <path d="M22 62 H58" stroke="#FBF8F1" stroke-width="3" stroke-linecap="round" opacity="0.55"></path>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- otti mark : ring o + base block -->
+  <g fill="#557B4F" stroke="#557B4F">
+    <circle cx="80" cy="66" r="36" fill="none" stroke-width="26"></circle>
+    <rect x="50" y="120" width="60" height="22" rx="6" stroke="none"></rect>
+  </g>
 </svg>
