@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
-  <!-- otti mark : ring o + base block -->
-  <g fill="#557B4F" stroke="#557B4F">
-    <circle cx="80" cy="66" r="36" fill="none" stroke-width="26"></circle>
-    <rect x="50" y="120" width="60" height="22" rx="6" stroke="none"></rect>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-14 160 441 441">
+  <path fill="#52774c" d="M206.75,174.06C92.56,174.06,0,266.62,0,380.8s92.56,206.75,206.75,206.75,206.75-92.56,206.75-206.75-92.56-206.75-206.75-206.75ZM206.75,469.58c-49.03,0-88.78-39.75-88.78-88.78s39.75-88.78,88.78-88.78,88.78,39.75,88.78,88.78-39.75,88.78-88.78,88.78Z"/>
+  <circle fill="none" stroke="#52774c" stroke-miterlimit="10" stroke-width="10" cx="206.75" cy="380.8" r="88.78"/>
 </svg>

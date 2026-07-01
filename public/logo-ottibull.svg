@@ -1,20 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 230" fill="none">
-  <!-- otti wordmark -->
-  <g fill="#557B4F" stroke="#557B4F">
-    <!-- o : thick ring + base block -->
-    <circle cx="66" cy="112" r="46" fill="none" stroke-width="34"></circle>
-    <rect x="34" y="185" width="64" height="26" rx="7" stroke="none"></rect>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1395.91 761.61">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #52774c;
+        stroke-miterlimit: 10;
+        stroke-width: 10px;
+      }
 
-    <!-- first t -->
-    <path d="M176 52 L176 150 Q176 172 198 172" fill="none" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M146 84 L212 84" fill="none" stroke-width="24" stroke-linecap="round"></path>
-
-    <!-- second t -->
-    <path d="M262 52 L262 150 Q262 172 284 172" fill="none" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
-    <path d="M232 84 L298 84" fill="none" stroke-width="24" stroke-linecap="round"></path>
-
-    <!-- i -->
-    <rect x="324" y="55" width="28" height="27" rx="8" stroke="none"></rect>
-    <path d="M338 100 L338 150 Q338 172 360 172" fill="none" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"></path>
+      .cls-2 {
+        fill: #52774c;
+      }
+    </style>
+  </defs>
+  <rect class="cls-2" x="63.5" y="643.63" width="286.49" height="117.98"/>
+  <path class="cls-2" d="M1045.71,292.62h39.61v-117.98h-39.61c-29.46,0-44.63-15.13-44.66-44.57v-.08h0V62.89h-117.99v67.1h0v.08c-.03,29.44-15.2,44.57-44.66,44.57h-39.61v117.98h39.61c29.39,0,44.55,15.07,44.65,44.37v132.58c0,73.32,44.67,117.98,117.98,117.98h84.26v-117.98h-39.6c-29.49,0-44.66-15.16-44.66-44.66v-24.44h0v-63.2h0v-.27c.09-29.31,15.25-44.39,44.65-44.39Z"/>
+  <path class="cls-2" d="M699.92,292.62h39.61v-117.98h-39.61c-29.46,0-44.63-15.13-44.66-44.57v-.08h0V62.89h-117.99v67.1h0v.08c-.03,29.44-15.2,44.57-44.66,44.57h-39.61v117.98h39.61c29.39,0,44.55,15.07,44.65,44.37v132.58c0,73.32,44.67,117.98,117.98,117.98h84.26v-117.98h-39.6c-29.49,0-44.66-15.16-44.66-44.66v-24.44h0v-63.2h0v-.27c.09-29.31,15.25-44.39,44.65-44.39Z"/>
+  <path class="cls-2" d="M206.75,174.06C92.56,174.06,0,266.62,0,380.8s92.56,206.75,206.75,206.75,206.75-92.56,206.75-206.75-92.56-206.75-206.75-206.75ZM206.75,469.58c-49.03,0-88.78-39.75-88.78-88.78s39.75-88.78,88.78-88.78,88.78,39.75,88.78,88.78-39.75,88.78-88.78,88.78Z"/>
+  <g>
+    <path class="cls-2" d="M1380.92,469.57c-29.49,0-44.66-15.16-44.66-44.66v-132.29c0-73.32-44.66-117.98-117.97-117.98h-54.77v117.98h10.11c29.49,0,44.66,15.16,44.66,44.66v132.29c0,73.32,44.66,117.98,117.97,117.98h54.77v-117.98h-10.11Z"/>
+    <path class="cls-2" d="M1277.26,125.78c35.03,0,62.89-28.75,62.89-62.89S1312.29,0,1277.26,0s-62.88,27.85-62.88,62.89,28.75,62.89,62.88,62.89Z"/>
   </g>
+  <rect class="cls-2" x="1163.53" y="174.65" width="4.88" height="117.98"/>
+  <rect class="cls-2" x="1158.65" y="174.65" width="4.88" height="117.98"/>
+  <rect class="cls-2" x="1391.03" y="469.57" width="4.88" height="117.98"/>
+  <circle class="cls-1" cx="206.75" cy="380.8" r="88.78"/>
 </svg>
