@@ -23,36 +23,6 @@ const FIELDS: Record<VehicleType, FieldDef[]> = {
     { key: "hasKitchen", label: "Cocina", type: "checkbox" },
     { key: "hasBathroom", label: "Baño", type: "checkbox" },
   ],
-  motorcycle: [
-    { key: "displacementCc", label: "Cilindrada (cc)", type: "number" },
-    { key: "year", label: "Año", type: "number" },
-    {
-      key: "licenseRequired",
-      label: "Permiso",
-      type: "select",
-      options: ["AM", "A1", "A2", "A"],
-    },
-    { key: "helmetIncluded", label: "Casco incluido", type: "checkbox" },
-  ],
-  car: [
-    { key: "seats", label: "Plazas", type: "number" },
-    { key: "year", label: "Año", type: "number" },
-    {
-      key: "transmission",
-      label: "Transmisión",
-      type: "select",
-      options: ["manual", "automatic"],
-    },
-  ],
-  bicycle: [
-    { key: "type", label: "Tipo", type: "select", options: ["mtb", "road", "city", "electric"] },
-    { key: "gears", label: "Marchas", type: "number" },
-  ],
-  boat: [
-    { key: "lengthM", label: "Longitud (m)", type: "number" },
-    { key: "year", label: "Año", type: "number" },
-    { key: "capacity", label: "Capacidad", type: "number" },
-  ],
 };
 
 function asNumber(v: unknown): number | null {

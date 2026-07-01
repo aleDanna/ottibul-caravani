@@ -13,7 +13,7 @@
   },
   "home": {
     "metaTitle": "Otti Bull · Camper Rentals in Barcelona",
-    "metaDescription": "Rent premium campers and motorcycles in Barcelona. Easy booking, personalized service.",
+    "metaDescription": "Rent premium campers in Barcelona. Easy booking, personalized service.",
     "heroEyebrow": "Freedom on Wheels",
     "heroTitle": "Your next adventure starts here",
     "heroSubtitle": "Premium camper rentals in Barcelona",
@@ -149,14 +149,10 @@
   },
   "catalog": {
     "metaTitle": "Vehicle Catalog | Otti Bull",
-    "metaDescription": "Explore our fleet of campers, motorcycles and more for rent in Barcelona.",
+    "metaDescription": "Explore our fleet of campers for rent in Barcelona.",
     "title": "Our fleet",
     "filterAll": "All",
     "filterCamper": "Campers",
-    "filterMotorcycle": "Motorcycles",
-    "filterCar": "Cars",
-    "filterBicycle": "Bicycles",
-    "filterBoat": "Boats",
     "fromPrice": "from {price} €/day",
     "empty": "No vehicles match the selected filters."
   },

@@ -88,10 +88,6 @@ export function VehicleForm(props: Props) {
             style={inputStyle}
           >
             <option value="camper">Camper</option>
-            <option value="motorcycle">Moto</option>
-            <option value="car">Coche</option>
-            <option value="bicycle">Bici</option>
-            <option value="boat">Barco</option>
           </select>
         </Row>
         <Row label="Precio/día (€)">

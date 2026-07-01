@@ -26,7 +26,9 @@ export default async function EditVehiclePage({ params }: { params: Promise<{ id
 
   const initial: VehicleFormInput & { id: string } = {
     id: v.id,
-    type: v.type,
+    // The vehicle_type DB enum still lists legacy categories; the fleet only
+    // offers campers now, so narrow to the single supported form type.
+    type: "camper",
     basePricePerDay: Number(v.basePricePerDay),
     minRentalDays: v.minRentalDays,
     maxRentalDays: v.maxRentalDays,

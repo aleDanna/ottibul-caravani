@@ -13,7 +13,7 @@
   },
   "home": {
     "metaTitle": "Otti Bull · Alquiler de Autocaravanas en Barcelona",
-    "metaDescription": "Alquila autocaravanas y motos premium en Barcelona. Reserva fácil, atención personalizada.",
+    "metaDescription": "Alquila autocaravanas premium en Barcelona. Reserva fácil, atención personalizada.",
     "heroEyebrow": "Libertad sobre Ruedas",
     "heroTitle": "Tu próxima aventura empieza aquí",
     "heroSubtitle": "Alquiler de autocaravanas premium en Barcelona",
@@ -149,14 +149,10 @@
   },
   "catalog": {
     "metaTitle": "Catálogo de Vehículos | Otti Bull",
-    "metaDescription": "Explora nuestra flota de autocaravanas, motos y más en alquiler en Barcelona.",
+    "metaDescription": "Explora nuestra flota de autocaravanas en alquiler en Barcelona.",
     "title": "Nuestra flota",
     "filterAll": "Todos",
     "filterCamper": "Autocaravanas",
-    "filterMotorcycle": "Motos",
-    "filterCar": "Coches",
-    "filterBicycle": "Bicicletas",
-    "filterBoat": "Barcos",
     "fromPrice": "desde {price} €/día",
     "empty": "No hay vehículos que coincidan con los filtros."
   },

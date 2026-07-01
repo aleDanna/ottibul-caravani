@@ -6,7 +6,7 @@ import type { Locale } from "@/i18n/routing";
 export type VehicleCardData = {
   id: string;
   slug: string;
-  type: "camper" | "motorcycle" | "car" | "bicycle" | "boat";
+  type: "camper";
   basePricePerDay: string;
   location: string;
   attributes: Record<string, unknown>;
@@ -26,36 +26,6 @@ const TYPE_ICON_PATHS: Record<VehicleCardData["type"], React.ReactElement> = {
       <path d="M14 9h4l3 4v4h-2" />
       <circle cx="7" cy="18" r="2" />
       <circle cx="17" cy="18" r="2" />
-    </>
-  ),
-  motorcycle: (
-    <>
-      <circle cx="6" cy="17" r="4" />
-      <circle cx="18" cy="17" r="4" />
-      <path d="m6 17 4-9h5l3 9" />
-      <path d="M11 6h3" />
-    </>
-  ),
-  car: (
-    <>
-      <path d="M5 17H3v-4l3-7h12l3 7v4h-2" />
-      <circle cx="7" cy="17" r="2" />
-      <circle cx="17" cy="17" r="2" />
-    </>
-  ),
-  bicycle: (
-    <>
-      <circle cx="6" cy="17" r="4" />
-      <circle cx="18" cy="17" r="4" />
-      <path d="m6 17 4-9h5l3 9" />
-      <path d="M11 6h3" />
-    </>
-  ),
-  boat: (
-    <>
-      <path d="M2 17h20" />
-      <path d="M5 12 12 4l7 8" />
-      <path d="M5 17V12h14v5" />
     </>
   ),
 };
@@ -155,10 +125,6 @@ function pickSeats(attributes: Record<string, unknown>): number | null {
 
 const TYPE_LABEL_KEY: Record<VehicleCardData["type"], string> = {
   camper: "filterCamper",
-  motorcycle: "filterMotorcycle",
-  car: "filterCar",
-  bicycle: "filterBicycle",
-  boat: "filterBoat",
 };
 
 export function VehicleCard({ locale, vehicle }: VehicleCardProps) {

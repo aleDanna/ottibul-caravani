@@ -11,7 +11,7 @@ import { CatalogFilters } from "@/components/public/CatalogFilters";
 
 export const dynamic = "force-static";
 
-const VALID_TYPES = ["camper", "motorcycle", "car", "bicycle", "boat"] as const;
+const VALID_TYPES = ["camper"] as const;
 
 function isValidType(v: string | undefined): v is VehicleType {
   return !!v && (VALID_TYPES as readonly string[]).includes(v);
@@ -64,7 +64,7 @@ export default async function CatalogPage({
   const cards = list.map((v) => ({
     id: v.id,
     slug: v.slug,
-    type: v.type,
+    type: v.type as "camper",
     basePricePerDay: v.basePricePerDay,
     location: v.location,
     attributes: (v.attributes ?? {}) as Record<string, unknown>,
