@@ -19,48 +19,12 @@ describe("vehicle attributes schemas", () => {
     expect(result.success).toBe(false);
   });
 
-  it("accepts valid motorcycle attributes", () => {
-    const result = validateAttributes("motorcycle", {
-      displacementCc: 650,
-      year: 2022,
-      licenseRequired: "A2",
-    });
-    expect(result.success).toBe(true);
-  });
-
-  it("rejects motorcycle with too-low displacement", () => {
-    const result = validateAttributes("motorcycle", {
-      displacementCc: 30,
-      year: 2022,
-      licenseRequired: "A2",
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it("accepts valid car attributes", () => {
-    const result = validateAttributes("car", {
-      seats: 5,
-      year: 2024,
-      transmission: "manual",
-    });
-    expect(result.success).toBe(true);
-  });
-
-  it("accepts valid bicycle attributes", () => {
-    const result = validateAttributes("bicycle", { type: "mtb", gears: 21 });
-    expect(result.success).toBe(true);
-  });
-
-  it("accepts valid boat attributes", () => {
-    const result = validateAttributes("boat", {
-      lengthM: 8,
-      year: 2020,
-      capacity: 6,
-    });
-    expect(result.success).toBe(true);
-  });
-
   it("throws on unknown vehicle type", () => {
     expect(() => validateAttributes("spaceship" as never, {})).toThrow();
+  });
+
+  it("throws on vehicle types no longer offered", () => {
+    expect(() => validateAttributes("motorcycle" as never, {})).toThrow();
+    expect(() => validateAttributes("boat" as never, {})).toThrow();
   });
 });

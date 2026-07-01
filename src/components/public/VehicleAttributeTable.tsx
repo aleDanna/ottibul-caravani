@@ -14,12 +14,6 @@ const ATTR_LABELS: Record<Locale, Record<string, string>> = {
     licenseRequired: "Permiso requerido",
     hasKitchen: "Cocina",
     hasBathroom: "Baño",
-    displacementCc: "Cilindrada (cc)",
-    helmetIncluded: "Casco incluido",
-    seats: "Plazas",
-    type: "Tipo",
-    gears: "Marchas",
-    capacity: "Capacidad",
   },
   ca: {
     berths: "Places per dormir",
@@ -30,12 +24,6 @@ const ATTR_LABELS: Record<Locale, Record<string, string>> = {
     licenseRequired: "Permís requerit",
     hasKitchen: "Cuina",
     hasBathroom: "Bany",
-    displacementCc: "Cilindrada (cc)",
-    helmetIncluded: "Casc inclòs",
-    seats: "Places",
-    type: "Tipus",
-    gears: "Marxes",
-    capacity: "Capacitat",
   },
   en: {
     berths: "Sleeping berths",
@@ -46,12 +34,6 @@ const ATTR_LABELS: Record<Locale, Record<string, string>> = {
     licenseRequired: "License required",
     hasKitchen: "Kitchen",
     hasBathroom: "Bathroom",
-    displacementCc: "Displacement (cc)",
-    helmetIncluded: "Helmet included",
-    seats: "Seats",
-    type: "Type",
-    gears: "Gears",
-    capacity: "Capacity",
   },
 };
 

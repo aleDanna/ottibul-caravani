@@ -13,46 +13,17 @@ export const camperAttributes = z.object({
   hasBathroom: z.boolean().optional(),
 });
 
-export const motorcycleAttributes = z.object({
-  displacementCc: z.number().int().min(50).max(2500),
-  year: z.number().int().min(1980).max(yearMax),
-  licenseRequired: z.enum(["AM", "A1", "A2", "A"]),
-  helmetIncluded: z.boolean().optional(),
-});
-
-export const carAttributes = z.object({
-  seats: z.number().int().min(2).max(9),
-  year: z.number().int().min(1980).max(yearMax),
-  transmission: z.enum(["manual", "automatic"]),
-});
-
-export const bicycleAttributes = z.object({
-  type: z.enum(["mtb", "road", "city", "electric"]),
-  gears: z.number().int().min(1).max(30).optional(),
-});
-
-export const boatAttributes = z.object({
-  lengthM: z.number().min(2).max(50),
-  year: z.number().int().min(1970).max(yearMax),
-  licenseRequired: z.string().optional(),
-  capacity: z.number().int().min(1).max(50),
-});
-
+// The fleet only rents campers. Other vehicle categories (motorcycle, car,
+// bicycle, boat) were removed from the public catalogue and the admin UI. The
+// vehicle_type DB enum still lists them for backwards compatibility, but no new
+// records of those types can be created.
 export const vehicleAttributesSchemas = {
   camper: camperAttributes,
-  motorcycle: motorcycleAttributes,
-  car: carAttributes,
-  bicycle: bicycleAttributes,
-  boat: boatAttributes,
 } as const;
 
 export type VehicleType = keyof typeof vehicleAttributesSchemas;
 
 export type CamperAttributes = z.infer<typeof camperAttributes>;
-export type MotorcycleAttributes = z.infer<typeof motorcycleAttributes>;
-export type CarAttributes = z.infer<typeof carAttributes>;
-export type BicycleAttributes = z.infer<typeof bicycleAttributes>;
-export type BoatAttributes = z.infer<typeof boatAttributes>;
 
 export function validateAttributes(
   type: VehicleType,

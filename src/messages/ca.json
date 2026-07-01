@@ -13,7 +13,7 @@
   },
   "home": {
     "metaTitle": "Otti Bull · Lloguer d'Autocaravanes a Barcelona",
-    "metaDescription": "Lloga autocaravanes i motos premium a Barcelona. Reserva fàcil, atenció personalitzada.",
+    "metaDescription": "Lloga autocaravanes premium a Barcelona. Reserva fàcil, atenció personalitzada.",
     "heroEyebrow": "Llibertat sobre Rodes",
     "heroTitle": "La teva propera aventura comença aquí",
     "heroSubtitle": "Lloguer d'autocaravanes premium a Barcelona",
@@ -149,14 +149,10 @@
   },
   "catalog": {
     "metaTitle": "Catàleg de Vehicles | Otti Bull",
-    "metaDescription": "Explora la nostra flota d'autocaravanes, motos i més en lloguer a Barcelona.",
+    "metaDescription": "Explora la nostra flota d'autocaravanes en lloguer a Barcelona.",
     "title": "La nostra flota",
     "filterAll": "Tots",
     "filterCamper": "Autocaravanes",
-    "filterMotorcycle": "Motos",
-    "filterCar": "Cotxes",
-    "filterBicycle": "Bicicletes",
-    "filterBoat": "Vaixells",
     "fromPrice": "des de {price} €/dia",
     "empty": "No hi ha vehicles que coincideixin amb els filtres."
   },

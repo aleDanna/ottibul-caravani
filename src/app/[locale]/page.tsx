@@ -44,7 +44,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const fleetCards: VehicleCardData[] = fleet.map((v) => ({
     id: v.id,
     slug: v.slug,
-    type: v.type,
+    type: v.type as "camper",
     basePricePerDay: v.basePricePerDay,
     location: v.location,
     attributes: (v.attributes ?? {}) as Record<string, unknown>,

@@ -21,7 +21,7 @@ const image = z.object({
 });
 
 export const vehicleFormSchema = z.object({
-  type: z.enum(["camper", "motorcycle", "car", "bicycle", "boat"]),
+  type: z.enum(["camper"]),
   basePricePerDay: z.coerce.number().min(0),
   minRentalDays: z.coerce.number().int().min(1).default(1),
   maxRentalDays: z.coerce.number().int().min(1).optional().nullable(),

@@ -3,14 +3,10 @@ import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import type { VehicleType } from "@/lib/vehicle-attributes";
 
-const TYPES: VehicleType[] = ["camper", "motorcycle", "car", "bicycle", "boat"];
+const TYPES: VehicleType[] = ["camper"];
 
 const TYPE_KEY: Record<VehicleType, string> = {
   camper: "filterCamper",
-  motorcycle: "filterMotorcycle",
-  car: "filterCar",
-  bicycle: "filterBicycle",
-  boat: "filterBoat",
 };
 
 export async function CatalogFilters({
